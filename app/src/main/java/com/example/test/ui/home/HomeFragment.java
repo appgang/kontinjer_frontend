@@ -1,75 +1,64 @@
-package com.example.test;
+package com.example.test.ui.home;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import com.example.test.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.util.Log;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
-
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
-
-
+public class HomeFragment extends Fragment implements OnMapReadyCallback {
     ArrayList<HashMap<String, String>> map = new ArrayList<HashMap<String, String>>();
+    GoogleMap mMap;
+    MapView mapView;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "(;", 10)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+    private HomeViewModel homeViewModel;
 
 
+    public View onCreateView(@NonNull LayoutInflater inflater,
+            ViewGroup container, Bundle savedInstanceState) {
+        homeViewModel =
+                ViewModelProviders.of(this).get(HomeViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        MapView mapView = root.findViewById(R.id.mapa);
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(this);
+        this.mapView=mapView;
+        return root;
     }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         final GoogleMap mMap = googleMap;
+        this.mMap=googleMap;
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child("coordinates");
         try {
             boolean success = googleMap.setMapStyle(
                     MapStyleOptions.loadRawResourceStyle(
-                            this, R.raw.map_style));
+                            getActivity(), R.raw.map_style));
 
             if (!success) {
                 Log.e("mapa", "Style parsing failed.");
@@ -95,26 +84,29 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng skopje = new LatLng(41.9979484, 21.4333326);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(skopje, 13.26f));
     }
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public void onResume() {
+        mapView.onResume();
+        super.onResume();
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
+
+
 }
