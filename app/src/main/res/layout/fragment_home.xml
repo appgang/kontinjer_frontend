@@ -12,6 +12,7 @@
         android:layout_height="match_parent"></com.google.android.gms.maps.MapView>
 
     <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -34,8 +35,8 @@
                 android:padding="10dp"
                 android:text="Glass"
                 android:textAlignment="center"
-                app:chipBackgroundColor="@color/stakloCrumb"
-                app:checkedIcon="@null" />
+                app:checkedIcon="@null"
+                app:chipBackgroundColor="@color/stakloCrumb" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/kartonChip"
@@ -45,8 +46,8 @@
                 android:padding="10dp"
                 android:text="Paper"
                 android:textAlignment="center"
-                app:chipBackgroundColor="@color/hartijaCrumb"
-                app:checkedIcon="@null"/>
+                app:checkedIcon="@null"
+                app:chipBackgroundColor="@color/hartijaCrumb" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/plasticChip"
@@ -56,11 +57,36 @@
                 android:padding="10dp"
                 android:text="Plastic"
                 android:textAlignment="center"
-                app:chipBackgroundColor="@color/plasticaCrumb"
                 app:checkedIcon="@null"
-                />
+                app:chipBackgroundColor="@color/plasticaCrumb" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipPickup"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Pick Up"
+                android:textAlignment="center"
+                app:checkedIcon="@null"
+                app:chipBackgroundColor="@color/pickupCrumb" />
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="100dp"
+        android:src="@drawable/ic_dashboard_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
+        app:layout_constraintVertical_bias="0.868" />
+    />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
