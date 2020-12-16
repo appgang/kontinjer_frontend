@@ -1,0 +1,90 @@
+Index: app/src/main/res/layout/activity_main2.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    android:id=\"@+id/container\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\">\r\n\r\n    <com.google.android.material.bottomnavigation.BottomNavigationView\r\n        android:id=\"@+id/nav_view\"\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"0dp\"\r\n        android:layout_marginEnd=\"0dp\"\r\n        android:background=\"?android:attr/windowBackground\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintLeft_toLeftOf=\"parent\"\r\n        app:layout_constraintRight_toRightOf=\"parent\"\r\n        app:menu=\"@menu/bottom_nav_menu\"/>\r\n\r\n    <fragment\r\n        android:id=\"@+id/nav_host_fragment\"\r\n        android:name=\"androidx.navigation.fragment.NavHostFragment\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        app:defaultNavHost=\"true\"\r\n        app:layout_constraintBottom_toTopOf=\"@id/nav_view\"\r\n        app:layout_constraintLeft_toLeftOf=\"parent\"\r\n        app:layout_constraintRight_toRightOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:navGraph=\"@navigation/mobile_navigation\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_main2.xml	(revision bb211d5af4484f2adc1d5f48ea28b3b22edbb094)
++++ app/src/main/res/layout/activity_main2.xml	(date 1608138506320)
+@@ -3,9 +3,11 @@
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:id="@+id/container"
++
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
+ 
++
+     <com.google.android.material.bottomnavigation.BottomNavigationView
+         android:id="@+id/nav_view"
+         android:layout_width="0dp"
+@@ -19,6 +21,7 @@
+         app:menu="@menu/bottom_nav_menu"/>
+ 
+     <fragment
++
+         android:id="@+id/nav_host_fragment"
+         android:name="androidx.navigation.fragment.NavHostFragment"
+         android:layout_width="match_parent"
+Index: app/src/main/res/layout/content_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    app:layout_behavior=\"@string/appbar_scrolling_view_behavior\">\r\n\r\n\r\n\r\n    <fragment xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n        xmlns:tools=\"http://schemas.android.com/tools\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:id=\"@+id/map\"\r\n        tools:context=\".MapsActivity\"\r\n        android:name=\"com.google.android.gms.maps.SupportMapFragment\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/content_main.xml	(revision bb211d5af4484f2adc1d5f48ea28b3b22edbb094)
++++ app/src/main/res/layout/content_main.xml	(date 1608138506310)
+@@ -4,6 +4,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
++
+     app:layout_behavior="@string/appbar_scrolling_view_behavior">
+ 
+ 
+Index: app/src/main/res/menu/bottom_nav_menu.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<menu xmlns:android=\"http://schemas.android.com/apk/res/android\">\r\n\r\n    <item\r\n        android:id=\"@+id/navigation_home\"\r\n        android:icon=\"@drawable/ic_loc\"\r\n        android:title=\"@string/title_home\"/>\r\n\r\n    <item\r\n        android:id=\"@+id/navigation_dashboard\"\r\n        android:icon=\"@drawable/ic_search_plus\"\r\n        android:title=\"@string/title_dashboard\"/>\r\n\r\n    <item\r\n        android:id=\"@+id/navigation_notifications\"\r\n        android:icon=\"@drawable/ic_list\"\r\n        android:title=\"@string/title_notifications\"/>\r\n\r\n</menu>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/menu/bottom_nav_menu.xml	(revision bb211d5af4484f2adc1d5f48ea28b3b22edbb094)
++++ app/src/main/res/menu/bottom_nav_menu.xml	(date 1608138506326)
+@@ -3,12 +3,12 @@
+ 
+     <item
+         android:id="@+id/navigation_home"
+-        android:icon="@drawable/ic_loc"
++        android:icon="@drawable/ic_map"
+         android:title="@string/title_home"/>
+ 
+     <item
+         android:id="@+id/navigation_dashboard"
+-        android:icon="@drawable/ic_search_plus"
++        android:icon="@drawable/ic_search"
+         android:title="@string/title_dashboard"/>
+ 
+     <item
+Index: app/src/main/res/drawable/ic_loc.xml
+===================================================================
+--- app/src/main/res/drawable/ic_loc.xml	(revision bb211d5af4484f2adc1d5f48ea28b3b22edbb094)
++++ app/src/main/res/drawable/ic_loc.xml	(revision bb211d5af4484f2adc1d5f48ea28b3b22edbb094)
+@@ -1,5 +0,0 @@
+-<vector android:height="200dp"
+-    android:viewportHeight="24" android:viewportWidth="24"
+-    android:width="200dp" xmlns:android="http://schemas.android.com/apk/res/android">
+-    <path android:fillColor="#000000" android:pathData="M12,2C8.13,2 5,5.13 5,9c0,5.25 7,13 7,13s7,-7.75 7,-13c0,-3.87 -3.13,-7 -7,-7zM12,11.5c-1.38,0 -2.5,-1.12 -2.5,-2.5s1.12,-2.5 2.5,-2.5 2.5,1.12 2.5,2.5 -1.12,2.5 -2.5,2.5z"/>
+-</vector>
+Index: app/src/main/res/drawable/ic_search_plus.xml
+===================================================================
+--- app/src/main/res/drawable/ic_search_plus.xml	(revision bb211d5af4484f2adc1d5f48ea28b3b22edbb094)
++++ app/src/main/res/drawable/ic_search_plus.xml	(revision bb211d5af4484f2adc1d5f48ea28b3b22edbb094)
+@@ -1,5 +0,0 @@
+-<vector android:height="200dp" android:viewportHeight="24"
+-    android:viewportWidth="24" android:width="200dp" xmlns:android="http://schemas.android.com/apk/res/android">
+-    <path android:fillColor="#000000" android:fillType="evenOdd" android:pathData="M16.325,14.899l5.38,5.38a1.008,1.008 0,0 1,-1.427 1.426l-5.38,-5.38a8,8 0,1 1,1.426 -1.426zM10,16a6,6 0,1 0,0 -12a6,6 0,0 0,0 12zM13,11h-2v2a1,1 0,0 1,-2 0v-2L7,11a1,1 0,0 1,0 -2h2L9,7a1,1 0,1 1,2 0v2h2a1,1 0,0 1,0 2z"/>
+-    <path android:fillColor="#00000000" android:pathData="M0,0h24v24h-24z"/>
+-</vector>
