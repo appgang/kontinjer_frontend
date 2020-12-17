@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,15 +19,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.room.Room;
 
+import com.example.test.AppDatabase;
 import com.example.test.R;
 import com.example.test.ui.home.HomeFragment;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.util.List;
+
 public class NotificationsFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
+    AppDatabase db;
     Activity v;
 
     @Override
@@ -58,8 +64,25 @@ public class NotificationsFragment extends Fragment {
                     }
                 }
         );
+
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                System.out.println("WORKING");
+                db = AppDatabase.getInstance(getContext());
+                List<RecycledItems> ril = db.recycledItemsDAO().getAll();
+                for (RecycledItems r : ril) {
+                    System.out.println(r.item);
+                }
+            }
+        };
+
+
+        thread.start();
         return root;
+
     }
+
 
     public void scanCode() {
         IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
