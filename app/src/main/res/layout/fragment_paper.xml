@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/paperfragment"
+    tools:context=".ui.dashboard.PaperFragment">
+
+    <EditText
+        android:id="@+id/otpadok_tekst"
+        android:layout_width="362dp"
+        android:layout_height="39dp"
+        android:ems="12"
+        android:inputType="none"
+        android:text="Изберете отпадок:"
+        android:textIsSelectable="false"
+        app:layout_constraintBottom_toTopOf="@+id/karton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/karton"
+        android:layout_width="366dp"
+        android:layout_height="150dp"
+        android:text="Картон"
+        app:layout_constraintBottom_toTopOf="@+id/ambalaza"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/otpadok_tekst" />
+
+    <Button
+        android:id="@+id/ambalaza"
+        android:layout_width="366dp"
+        android:layout_height="150dp"
+        android:text="Амбалажа"
+        app:layout_constraintBottom_toTopOf="@+id/list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/karton" />
+
+    <Button
+        android:id="@+id/list"
+        android:layout_width="366dp"
+        android:layout_height="150dp"
+        android:layout_marginBottom="60dp"
+        android:text="Тенка хартија"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ambalaza" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        tools:layout_editor_absoluteY="383dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

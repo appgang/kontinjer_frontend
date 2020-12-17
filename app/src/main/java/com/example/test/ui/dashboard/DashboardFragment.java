@@ -1,24 +1,16 @@
 package com.example.test.ui.dashboard;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.test.R;
-
-import java.io.Console;
 
 public class DashboardFragment extends Fragment {
 
@@ -47,26 +39,48 @@ public class DashboardFragment extends Fragment {
                 kombinacija += "plastika";
                 Fragment fragment = null;
                 fragment = new PlasticsFragment();
-                replaceFragment(fragment);
-
+                replaceFragmentPlastic(fragment);
+                newInstance(kombinacija);
             }
         });
         kopce2 = root.findViewById(R.id.hartija);
         kopce2.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View view) {
                 kombinacija += "hartija";
+                Fragment fragment = null;
+                fragment = new PaperFragment();
+                replaceFragmentPaper(fragment);
+                newInstance(kombinacija);
             }
         });
         kopce3 = root.findViewById(R.id.staklo);
         kopce3.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View view) {
                 kombinacija += "staklo";
+                Fragment fragment = null;
+                fragment = new FinalFragment();
+                replaceFragmentGlass(fragment);
+                newInstance(kombinacija);
             }
         });
         return root;
     }
 
-    public void replaceFragment(Fragment fragment) {
+    public void replaceFragmentPlastic(Fragment fragment) {
         getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new PlasticsFragment()).addToBackStack(null).commit();
+    }
+    public void replaceFragmentPaper(Fragment fragment) {
+        getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new PaperFragment()).addToBackStack(null).commit();
+    }
+    public void replaceFragmentGlass(Fragment fragment) {
+        getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new FinalFragment()).addToBackStack(null).commit();
+    }
+    public static DashboardFragment newInstance(String string) {
+        DashboardFragment f = new DashboardFragment();
+        // Supply index input as an argument.
+        Bundle args = new Bundle();
+        args.putString("string", string);
+        f.setArguments(args);
+        return f;
     }
 }
