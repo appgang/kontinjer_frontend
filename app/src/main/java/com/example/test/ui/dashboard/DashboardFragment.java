@@ -1,5 +1,6 @@
 package com.example.test.ui.dashboard;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.test.R;
@@ -19,8 +21,8 @@ import java.io.Console;
 public class DashboardFragment extends Fragment {
 
     private DashboardViewModel dashboardViewModel;
-    private String kombinacija;
-    private Button kopce;
+    private String kombinacija = "";
+    private Button kopce1, kopce2, kopce3;
     private View view;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -34,16 +36,40 @@ public class DashboardFragment extends Fragment {
                 textView.setText(s);
             }
         });*/
-        //EditText materijal = getView().findViewById(R.id.materijal_tekst);
-        //materijal.setFocusable(false);
+        EditText materijal = root.findViewById(R.id.materijal_tekst);
+        materijal.setFocusable(false);
+        //final Fragment fragment = null;
+        kopce1 = root.findViewById(R.id.plastika);
+        kopce1.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View view)
+            {
+                kombinacija += "plastika";
+                Fragment fragment = null;
+                fragment = new PlasticsFragment();
+                replaceFragment(fragment);
+            }
+        });
+        kopce2 = root.findViewById(R.id.hartija);
+        kopce2.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View view)
+            {
+                kombinacija += "hartija";
+            }
+        });
+        kopce3 = root.findViewById(R.id.staklo);
+        kopce3.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View view)
+            {
+                kombinacija += "staklo";
+            }
+        });
         return root;
     }
-    kopce = getActivity().findViewById(R.id.plastika);
-    kopce.setOnClickListener(new View.OnClickListener(){
-        @Override
-        public void stringBuilder(View view)
-        {
-            kombinacija += view.getId();
-        }
-    });
+    public void replaceFragment(Fragment fragment)
+    {
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.plasticsfragment, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 }

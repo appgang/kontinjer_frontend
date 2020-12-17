@@ -126,6 +126,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             if (locationPermissionGranted) {
                 System.out.println("PERMISISON GRANTED");
                 LocationManager lm = (LocationManager) v.getSystemService(Context.LOCATION_SERVICE);
+                //noinspection MissingPermission
                 Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
                 if (location == null) {
@@ -159,8 +160,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                             // notify user "GPS or Network provider" not available
                         }
                     };
-
+                    //noinspection MissingPermission
                     lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 500, locationListener);
+                    //noinspection MissingPermission
                     lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 500, locationListener);
                 } else {
                     System.out.println("LOCATON TRUE");
@@ -199,21 +201,25 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         myRef.addValueEventListener(new ValueEventListener() {
 
             public void onDataChange(DataSnapshot dataSnapshot) {
-                FloatingActionButton fab = v.findViewById(R.id.fab);
-                fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(getContext(), "Add location", Toast.LENGTH_LONG).show();
-                        HashMap<String, String> tempHash = new HashMap<String, String>();
-                        tempHash.put("latitude", l.toString());
-                        tempHash.put("longitude", t.toString());
-                        tempHash.put("name", "pickup");
-                        int tempS = map.size();
-                        myRef.child(String.valueOf(tempS)).setValue(tempHash);
 
-                    }
-                });
-                System.out.println("first");
+                try {
+                    FloatingActionButton fab = v.findViewById(R.id.fab);
+                    fab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(getContext(), "Add location", Toast.LENGTH_LONG).show();
+                            HashMap<String, String> tempHash = new HashMap<String, String>();
+                            tempHash.put("latitude", l.toString());
+                            tempHash.put("longitude", t.toString());
+                            tempHash.put("name", "pickup");
+                            int tempS = map.size();
+                            myRef.child(String.valueOf(tempS)).setValue(tempHash);
+
+                        }
+                    });
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
                 map = (ArrayList<HashMap<String, String>>) dataSnapshot.getValue();
                 final Chip chipPlastika;
                 final Chip chipHartija;

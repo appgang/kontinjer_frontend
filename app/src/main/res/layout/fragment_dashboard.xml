@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/plasticsfragment"
     tools:context=".ui.dashboard.DashboardFragment">
 
     <Button
@@ -12,7 +13,6 @@
         android:layout_height="150dp"
         android:layout_marginBottom="60dp"
         android:text="Стакло"
-        android:onClick="stringBuilder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +23,6 @@
         android:layout_width="366dp"
         android:layout_height="150dp"
         android:text="Хартија"
-        android:onClick="stringBuilder"
         app:layout_constraintBottom_toTopOf="@+id/staklo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.52"
@@ -42,7 +41,6 @@
         android:layout_width="366dp"
         android:layout_height="150dp"
         android:text="Пластика"
-        android:onClick="stringBuilder"
         app:layout_constraintBottom_toTopOf="@+id/hartija"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.666"
