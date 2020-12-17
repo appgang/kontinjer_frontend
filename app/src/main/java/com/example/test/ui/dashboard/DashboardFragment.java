@@ -21,7 +21,7 @@ public class DashboardFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-       // dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
+        // dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
         /*final TextView textView = root.findViewById(R.id.materijal_tekst);
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -36,51 +36,33 @@ public class DashboardFragment extends Fragment {
         kopce1 = root.findViewById(R.id.plastika);
         kopce1.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View view) {
-                kombinacija += "plastika";
-                Fragment fragment = null;
-                fragment = new PlasticsFragment();
-                replaceFragmentPlastic(fragment);
-                newInstance(kombinacija);
+                replaceFragment(formatFragment("plastika", new PlasticsFragment()));
             }
         });
         kopce2 = root.findViewById(R.id.hartija);
         kopce2.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View view) {
-                kombinacija += "hartija";
-                Fragment fragment = null;
-                fragment = new PaperFragment();
-                replaceFragmentPaper(fragment);
-                newInstance(kombinacija);
+                replaceFragment(formatFragment("hartija", new PaperFragment()));
             }
         });
         kopce3 = root.findViewById(R.id.staklo);
         kopce3.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View view) {
-                kombinacija += "staklo";
-                Fragment fragment = null;
-                fragment = new FinalFragment();
-                replaceFragmentGlass(fragment);
-                newInstance(kombinacija);
+                replaceFragment(formatFragment("staklo", new FinalFragment()));
             }
         });
         return root;
     }
 
-    public void replaceFragmentPlastic(Fragment fragment) {
-        getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new PlasticsFragment()).addToBackStack(null).commit();
+    public void replaceFragment(Fragment fragment) {
+        getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, fragment).addToBackStack(null).commit();
     }
-    public void replaceFragmentPaper(Fragment fragment) {
-        getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new PaperFragment()).addToBackStack(null).commit();
-    }
-    public void replaceFragmentGlass(Fragment fragment) {
-        getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new FinalFragment()).addToBackStack(null).commit();
-    }
-    public static DashboardFragment newInstance(String string) {
-        DashboardFragment f = new DashboardFragment();
-        // Supply index input as an argument.
+
+    public Fragment formatFragment(String string, Fragment fragment) {
+        kombinacija += string;
         Bundle args = new Bundle();
-        args.putString("string", string);
-        f.setArguments(args);
-        return f;
+        args.putString("string", kombinacija);
+        fragment.setArguments(args);
+        return fragment;
     }
 }

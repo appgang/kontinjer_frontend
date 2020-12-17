@@ -17,7 +17,8 @@ public class FinalFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState
+    ) {
         View root = inflater.inflate(R.layout.fragment_final, container, false);
         Bundle args = getArguments();
         kombinacija = args.getString("string", "");
