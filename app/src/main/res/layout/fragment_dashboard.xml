@@ -1,23 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.dashboard.DashboardFragment" >
+    tools:context=".ui.dashboard.DashboardFragment">
 
-    <TextView
-        android:id="@+id/text_dashboard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+    <Button
+        android:id="@+id/staklo"
+        android:layout_width="366dp"
+        android:layout_height="150dp"
+        android:layout_marginBottom="60dp"
+        android:text="Стакло"
+        android:onClick="stringBuilder"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hartija" />
+
+    <Button
+        android:id="@+id/hartija"
+        android:layout_width="366dp"
+        android:layout_height="150dp"
+        android:text="Хартија"
+        android:onClick="stringBuilder"
+        app:layout_constraintBottom_toTopOf="@+id/staklo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/plastika" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        tools:layout_editor_absoluteY="383dp" />
+
+    <Button
+        android:id="@+id/plastika"
+        android:layout_width="366dp"
+        android:layout_height="150dp"
+        android:text="Пластика"
+        android:onClick="stringBuilder"
+        app:layout_constraintBottom_toTopOf="@+id/hartija"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materijal_tekst" />
+
+    <EditText
+        android:id="@+id/materijal_tekst"
+        android:layout_width="362dp"
+        android:layout_height="39dp"
+        android:ems="12"
+        android:inputType="none"
+        android:text="Изберете материјал:"
+        android:textIsSelectable="false"
+        app:layout_constraintBottom_toTopOf="@+id/plastika"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintVertical_bias="0.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
