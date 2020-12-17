@@ -8,6 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/activityBackground</item>
         <item name="bottomNavigationStyle">@style/Widget.MaterialComponents.BottomNavigationView.Colored</item>
+        <item name="colorControlHighlight">@color/colorPrimaryRipple</item>
+
     </style>
 
     <style name="AppTheme.NoActionBar">
