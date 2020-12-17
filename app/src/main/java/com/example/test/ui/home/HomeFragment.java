@@ -78,16 +78,22 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         v = null;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        MapView mapView = v.findViewById(R.id.mapa);
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(this);
+        this.mapView = mapView;
+        getDeviceLocation();
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        MapView mapView = root.findViewById(R.id.mapa);
-        mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync(this);
-        this.mapView = mapView;
-        getDeviceLocation();
+
         return root;
     }
 
@@ -220,102 +226,107 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
-                map = (ArrayList<HashMap<String, String>>) dataSnapshot.getValue();
-                final Chip chipPlastika;
-                final Chip chipHartija;
-                final Chip chipStaklo;
-                final Chip chipPickup;
+               if(v!=null){
+                   map = (ArrayList<HashMap<String, String>>) dataSnapshot.getValue();
+                   final Chip chipPlastika;
+                   final Chip chipHartija;
+                   final Chip chipStaklo;
+                   final Chip chipPickup;
 
-                chipPlastika = v.findViewById(R.id.plasticChip);
-                chipHartija = v.findViewById(R.id.kartonChip);
-                chipStaklo = v.findViewById(R.id.stakloChip);
-                chipPickup = v.findViewById(R.id.chipPickup);
+                   chipPlastika = v.findViewById(R.id.plasticChip);
+                   chipHartija = v.findViewById(R.id.kartonChip);
+                   chipStaklo = v.findViewById(R.id.stakloChip);
+                   chipPickup = v.findViewById(R.id.chipPickup);
 
-                chipStaklo.toggle();
-                chipPlastika.toggle();
-                chipHartija.toggle();
-                chipPickup.toggle();
+                   chipStaklo.toggle();
+                   chipPlastika.toggle();
+                   chipHartija.toggle();
+                   chipPickup.toggle();
 
-                chipStaklo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        stakloBool = !stakloBool;
-                        Toast.makeText(getContext(), "User Click", Toast.LENGTH_LONG).show();
-                        if (stakloBool) {
-                            chipStaklo.setChipBackgroundColorResource(R.color.stakloCrumb);
-                        } else if (!stakloBool)
-                            chipStaklo.setChipBackgroundColorResource(R.color.disabledCrumb);
-                        for (Marker m : markers) {
-                            try {
-                                if ((m.getTitle().equals("staklo"))) {
-                                    m.setVisible(stakloBool);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                });
-                chipPlastika.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        plastikaBool = !plastikaBool;
-                        Toast.makeText(getContext(), "User Click", Toast.LENGTH_LONG).show();
-                        if (plastikaBool) {
-                            chipPlastika.setChipBackgroundColorResource(R.color.plasticaCrumb);
-                        } else if (!plastikaBool)
-                            chipPlastika.setChipBackgroundColorResource(R.color.disabledCrumb);
-                        for (Marker m : markers) {
-                            try {
-                                if ((m.getTitle().equals("plastika"))) {
-                                    m.setVisible(plastikaBool);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                });
-                chipHartija.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        kartonBool = !kartonBool;
-                        Toast.makeText(getContext(), "User Click", Toast.LENGTH_LONG).show();
-                        if (kartonBool) {
-                            chipHartija.setChipBackgroundColorResource(R.color.hartijaCrumb);
-                        } else if (!kartonBool)
-                            chipHartija.setChipBackgroundColorResource(R.color.disabledCrumb);
-                        for (Marker m : markers) {
-                            try {
-                                if ((m.getTitle().equals("hartija"))) {
-                                    m.setVisible(kartonBool);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                });
-                chipPickup.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        pickupBool = !pickupBool;
-                        Toast.makeText(getContext(), "User Click", Toast.LENGTH_LONG).show();
-                        if (pickupBool) {
-                            chipPickup.setChipBackgroundColorResource(R.color.pickupCrumb);
-                        } else if (!pickupBool)
-                            chipPickup.setChipBackgroundColorResource(R.color.disabledCrumb);
-                        for (Marker m : markers) {
-                            try {
-                                if ((m.getTitle().equals("pickup"))) {
-                                    m.setVisible(pickupBool);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                });
+                   chipStaklo.setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                           stakloBool = !stakloBool;
+                           Toast.makeText(getContext(), "User Click", Toast.LENGTH_LONG).show();
+                           if (stakloBool) {
+                               chipStaklo.setChipBackgroundColorResource(R.color.stakloCrumb);
+                           } else if (!stakloBool)
+                               chipStaklo.setChipBackgroundColorResource(R.color.disabledCrumb);
+                           for (Marker m : markers) {
+                               try {
+                                   if ((m.getTitle().equals("staklo"))) {
+                                       m.setVisible(stakloBool);
+                                   }
+                               } catch (Exception e) {
+                                   e.printStackTrace();
+                               }
+                           }
+                       }
+                   });
+                   chipPlastika.setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                           plastikaBool = !plastikaBool;
+                           Toast.makeText(getContext(), "User Click", Toast.LENGTH_LONG).show();
+                           if (plastikaBool) {
+                               chipPlastika.setChipBackgroundColorResource(R.color.plasticaCrumb);
+                           } else if (!plastikaBool)
+                               chipPlastika.setChipBackgroundColorResource(R.color.disabledCrumb);
+                           for (Marker m : markers) {
+                               try {
+                                   if ((m.getTitle().equals("plastika"))) {
+                                       m.setVisible(plastikaBool);
+                                   }
+                               } catch (Exception e) {
+                                   e.printStackTrace();
+                               }
+                           }
+                       }
+                   });
+                   chipHartija.setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                           kartonBool = !kartonBool;
+                           Toast.makeText(getContext(), "User Click", Toast.LENGTH_LONG).show();
+                           if (kartonBool) {
+                               chipHartija.setChipBackgroundColorResource(R.color.hartijaCrumb);
+                           } else if (!kartonBool)
+                               chipHartija.setChipBackgroundColorResource(R.color.disabledCrumb);
+                           for (Marker m : markers) {
+                               try {
+                                   if ((m.getTitle().equals("hartija"))) {
+                                       m.setVisible(kartonBool);
+                                   }
+                               } catch (Exception e) {
+                                   e.printStackTrace();
+                               }
+                           }
+                       }
+                   });
+                   chipPickup.setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                           pickupBool = !pickupBool;
+                           Toast.makeText(getContext(), "User Click", Toast.LENGTH_LONG).show();
+                           if (pickupBool) {
+                               chipPickup.setChipBackgroundColorResource(R.color.pickupCrumb);
+                           } else if (!pickupBool)
+                               chipPickup.setChipBackgroundColorResource(R.color.disabledCrumb);
+                           for (Marker m : markers) {
+                               try {
+                                   if ((m.getTitle().equals("pickup"))) {
+                                       m.setVisible(pickupBool);
+                                   }
+                               } catch (Exception e) {
+                                   e.printStackTrace();
+                               }
+                           }
+                       }
+                   });
+               }
+               else{
+                   onDataChange(dataSnapshot);
+               }
 
 
                 for (HashMap<String, String> t : map) {

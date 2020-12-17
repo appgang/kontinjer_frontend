@@ -8,12 +8,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
 import com.example.test.R;
 
 import java.io.Console;
@@ -26,8 +28,8 @@ public class DashboardFragment extends Fragment {
     private View view;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
-            ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
+                             ViewGroup container, Bundle savedInstanceState) {
+       // dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
         /*final TextView textView = root.findViewById(R.id.materijal_tekst);
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -40,36 +42,31 @@ public class DashboardFragment extends Fragment {
         materijal.setFocusable(false);
         //final Fragment fragment = null;
         kopce1 = root.findViewById(R.id.plastika);
-        kopce1.setOnClickListener(new Button.OnClickListener(){
-            public void onClick(View view)
-            {
+        kopce1.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View view) {
                 kombinacija += "plastika";
                 Fragment fragment = null;
                 fragment = new PlasticsFragment();
                 replaceFragment(fragment);
+
             }
         });
         kopce2 = root.findViewById(R.id.hartija);
-        kopce2.setOnClickListener(new Button.OnClickListener(){
-            public void onClick(View view)
-            {
+        kopce2.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View view) {
                 kombinacija += "hartija";
             }
         });
         kopce3 = root.findViewById(R.id.staklo);
-        kopce3.setOnClickListener(new Button.OnClickListener(){
-            public void onClick(View view)
-            {
+        kopce3.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View view) {
                 kombinacija += "staklo";
             }
         });
         return root;
     }
-    public void replaceFragment(Fragment fragment)
-    {
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.plasticsfragment, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+
+    public void replaceFragment(Fragment fragment) {
+        getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new PlasticsFragment()).addToBackStack(null).commit();
     }
 }
