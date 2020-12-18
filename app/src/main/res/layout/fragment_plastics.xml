@@ -21,14 +21,12 @@
             android:orientation="vertical"
             android:translationY="15dp">
 
-            <EditText
+            <TextView
                 android:id="@+id/otpadok_tekst"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="none"
-                android:text="Изберете отпадок:"
-                android:textIsSelectable="false" />
+                android:ems="20"
+                android:text="Изберете отпадок:"/>
 
             <Button
                 android:id="@+id/shishe"
