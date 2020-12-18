@@ -1,0 +1,461 @@
+Index: app/src/main/java/com/example/test/ui/home/HomeFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.test.ui.home;\r\n\r\nimport android.app.Activity;\r\nimport android.content.Context;\r\nimport android.content.pm.PackageManager;\r\nimport android.content.res.Resources;\r\nimport android.location.Location;\r\nimport android.location.LocationListener;\r\nimport android.location.LocationManager;\r\nimport android.os.Bundle;\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.core.app.ActivityCompat;\r\nimport androidx.core.content.ContextCompat;\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.lifecycle.Observer;\r\nimport androidx.lifecycle.ViewModelProviders;\r\n\r\nimport com.example.test.Main2Activity;\r\nimport com.example.test.R;\r\nimport com.google.android.gms.maps.CameraUpdateFactory;\r\nimport com.google.android.gms.maps.GoogleMap;\r\nimport com.google.android.gms.maps.MapView;\r\nimport com.google.android.gms.maps.OnMapReadyCallback;\r\nimport com.google.android.gms.maps.SupportMapFragment;\r\nimport com.google.android.gms.maps.model.BitmapDescriptorFactory;\r\nimport com.google.android.gms.maps.model.LatLng;\r\nimport com.google.android.gms.maps.model.MapStyleOptions;\r\nimport com.google.android.gms.maps.model.Marker;\r\nimport com.google.android.gms.maps.model.MarkerOptions;\r\nimport com.google.android.gms.tasks.Task;\r\nimport com.google.android.material.chip.Chip;\r\nimport com.google.android.material.chip.ChipGroup;\r\nimport com.google.android.material.floatingactionbutton.FloatingActionButton;\r\nimport com.google.firebase.database.DataSnapshot;\r\nimport com.google.firebase.database.DatabaseError;\r\nimport com.google.firebase.database.DatabaseReference;\r\nimport com.google.firebase.database.FirebaseDatabase;\r\nimport com.google.firebase.database.ValueEventListener;\r\n\r\nimport java.security.spec.ECField;\r\nimport java.util.ArrayList;\r\nimport java.util.Arrays;\r\nimport java.util.HashMap;\r\nimport java.util.List;\r\n\r\npublic class HomeFragment extends Fragment implements OnMapReadyCallback {\r\n    ArrayList<HashMap<String, String>> map = new ArrayList<HashMap<String, String>>();\r\n    GoogleMap mMap;\r\n    MapView mapView;\r\n    boolean stakloBool = true;\r\n    boolean plastikaBool = true;\r\n    boolean kartonBool = true;\r\n    boolean pickupBool = true;\r\n    boolean locationPermissionGranted = true;\r\n    private HomeViewModel homeViewModel;\r\n    Double l, t;\r\n    Activity v;\r\n\r\n    @Override\r\n    public void onAttach(@NonNull Context context) {\r\n        super.onAttach(context);\r\n        if (context instanceof Activity) {\r\n            v = (Activity) context;\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public void onDetach() {\r\n        super.onDetach();\r\n        v = null;\r\n    }\r\n\r\n    @Override\r\n    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {\r\n        super.onViewCreated(view, savedInstanceState);\r\n        MapView mapView = v.findViewById(R.id.mapa);\r\n        mapView.onCreate(savedInstanceState);\r\n        mapView.getMapAsync(this);\r\n        this.mapView = mapView;\r\n        getDeviceLocation();\r\n    }\r\n\r\n    public View onCreateView(@NonNull LayoutInflater inflater,\r\n                             ViewGroup container, Bundle savedInstanceState) {\r\n        homeViewModel =\r\n                ViewModelProviders.of(this).get(HomeViewModel.class);\r\n        View root = inflater.inflate(R.layout.fragment_home, container, false);\r\n\r\n        return root;\r\n    }\r\n\r\n    private void getLocationPermission() {\r\n\r\n        if (ContextCompat.checkSelfPermission(getContext(),\r\n                android.Manifest.permission.ACCESS_FINE_LOCATION)\r\n                == PackageManager.PERMISSION_GRANTED) {\r\n            System.out.println(\"TRUE\");\r\n            locationPermissionGranted = true;\r\n        } else {\r\n            ActivityCompat.requestPermissions(v,\r\n                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},\r\n                    1);\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public void onRequestPermissionsResult(int requestCode,\r\n                                           @NonNull String[] permissions,\r\n                                           @NonNull int[] grantResults) {\r\n        switch (requestCode) {\r\n            case 1: {\r\n                if (grantResults.length > 0\r\n                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {\r\n                    locationPermissionGranted = true;\r\n                }\r\n            }\r\n        }\r\n    }\r\n\r\n    private void getDeviceLocation() {\r\n        Double latitude, longitude;\r\n        System.out.println(\"GETTING LOCATION\");\r\n        try {\r\n            if (locationPermissionGranted) {\r\n                System.out.println(\"PERMISISON GRANTED\");\r\n                LocationManager lm = (LocationManager) v.getSystemService(Context.LOCATION_SERVICE);\r\n                //noinspection MissingPermission\r\n                Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);\r\n\r\n                if (location == null) {\r\n                    System.out.println(\"LOCATON NULL\");\r\n                    final LocationListener locationListener = new LocationListener() {\r\n                        @Override\r\n                        public void onLocationChanged(final Location location) {\r\n\r\n                            // getting location of user\r\n                            Double latitude, longitude;\r\n                            latitude = location.getLatitude();\r\n                            longitude = location.getLongitude();\r\n                            System.out.println(longitude.toString() + latitude.toString());\r\n                            Toast.makeText(getContext(), longitude.toString() + latitude.toString(), Toast.LENGTH_LONG).show();\r\n                            l = latitude;\r\n                            t = longitude;\r\n                            // do something with Latlng\r\n                        }\r\n\r\n                        @Override\r\n                        public void onStatusChanged(String provider, int status, Bundle extras) {\r\n                        }\r\n\r\n                        @Override\r\n                        public void onProviderEnabled(String provider) {\r\n                            // do something\r\n                        }\r\n\r\n                        @Override\r\n                        public void onProviderDisabled(String provider) {\r\n                            // notify user \"GPS or Network provider\" not available\r\n                        }\r\n                    };\r\n                    //noinspection MissingPermission\r\n                    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 500, locationListener);\r\n                    //noinspection MissingPermission\r\n                    lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 500, locationListener);\r\n                } else {\r\n                    System.out.println(\"LOCATON TRUE\");\r\n                    longitude = location.getLongitude();\r\n                    latitude = location.getLatitude();\r\n                    System.out.println(longitude.toString() + latitude.toString());\r\n                    Toast.makeText(getContext(), longitude.toString() + latitude.toString(), Toast.LENGTH_LONG).show();\r\n                    l = latitude;\r\n                    t = longitude;\r\n                }\r\n            }\r\n        } catch (SecurityException e) {\r\n            Log.e(\"Exception: %s\", e.getMessage(), e);\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public void onMapReady(GoogleMap googleMap) {\r\n        final GoogleMap mMap = googleMap;\r\n        final List<Marker> markers = new ArrayList<Marker>();\r\n        this.mMap = googleMap;\r\n        getLocationPermission();\r\n        final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child(\"coordinates\");\r\n        try {\r\n            boolean success = googleMap.setMapStyle(\r\n                    MapStyleOptions.loadRawResourceStyle(\r\n                            v, R.raw.map_style));\r\n\r\n            if (!success) {\r\n                Log.e(\"mapa\", \"Style parsing failed.\");\r\n            }\r\n        } catch (Resources.NotFoundException e) {\r\n            Log.e(\"mapa\", \"Can't find style. Error: \", e);\r\n        }\r\n\r\n        myRef.addValueEventListener(new ValueEventListener() {\r\n\r\n            public void onDataChange(DataSnapshot dataSnapshot) {\r\n\r\n                try {\r\n                    FloatingActionButton fab = v.findViewById(R.id.fab);\r\n                    fab.setOnClickListener(new View.OnClickListener() {\r\n                        @Override\r\n                        public void onClick(View v) {\r\n                            Toast.makeText(getContext(), \"Add location\", Toast.LENGTH_LONG).show();\r\n                            HashMap<String, String> tempHash = new HashMap<String, String>();\r\n                            tempHash.put(\"latitude\", l.toString());\r\n                            tempHash.put(\"longitude\", t.toString());\r\n                            tempHash.put(\"name\", \"pickup\");\r\n                            int tempS = map.size();\r\n                            myRef.child(String.valueOf(tempS)).setValue(tempHash);\r\n\r\n                        }\r\n                    });\r\n                } catch (NullPointerException e) {\r\n                    e.printStackTrace();\r\n                }\r\n               if(v!=null){\r\n                   map = (ArrayList<HashMap<String, String>>) dataSnapshot.getValue();\r\n                   final Chip chipPlastika;\r\n                   final Chip chipHartija;\r\n                   final Chip chipStaklo;\r\n                   final Chip chipPickup;\r\n\r\n                   chipPlastika = v.findViewById(R.id.plasticChip);\r\n                   chipHartija = v.findViewById(R.id.kartonChip);\r\n                   chipStaklo = v.findViewById(R.id.stakloChip);\r\n                   chipPickup = v.findViewById(R.id.chipPickup);\r\n\r\n                   chipStaklo.toggle();\r\n                   chipPlastika.toggle();\r\n                   chipHartija.toggle();\r\n                   chipPickup.toggle();\r\n\r\n                   chipStaklo.setOnClickListener(new View.OnClickListener() {\r\n                       @Override\r\n                       public void onClick(View v) {\r\n                           stakloBool = !stakloBool;\r\n                           Toast.makeText(getContext(), \"User Click\", Toast.LENGTH_LONG).show();\r\n                           if (stakloBool) {\r\n                               chipStaklo.setChipBackgroundColorResource(R.color.stakloCrumb);\r\n                           } else if (!stakloBool)\r\n                               chipStaklo.setChipBackgroundColorResource(R.color.disabledCrumb);\r\n                           for (Marker m : markers) {\r\n                               try {\r\n                                   if ((m.getTitle().equals(\"staklo\"))) {\r\n                                       m.setVisible(stakloBool);\r\n                                   }\r\n                               } catch (Exception e) {\r\n                                   e.printStackTrace();\r\n                               }\r\n                           }\r\n                       }\r\n                   });\r\n                   chipPlastika.setOnClickListener(new View.OnClickListener() {\r\n                       @Override\r\n                       public void onClick(View v) {\r\n                           plastikaBool = !plastikaBool;\r\n                           Toast.makeText(getContext(), \"User Click\", Toast.LENGTH_LONG).show();\r\n                           if (plastikaBool) {\r\n                               chipPlastika.setChipBackgroundColorResource(R.color.plasticaCrumb);\r\n                           } else if (!plastikaBool)\r\n                               chipPlastika.setChipBackgroundColorResource(R.color.disabledCrumb);\r\n                           for (Marker m : markers) {\r\n                               try {\r\n                                   if ((m.getTitle().equals(\"plastika\"))) {\r\n                                       m.setVisible(plastikaBool);\r\n                                   }\r\n                               } catch (Exception e) {\r\n                                   e.printStackTrace();\r\n                               }\r\n                           }\r\n                       }\r\n                   });\r\n                   chipHartija.setOnClickListener(new View.OnClickListener() {\r\n                       @Override\r\n                       public void onClick(View v) {\r\n                           kartonBool = !kartonBool;\r\n                           Toast.makeText(getContext(), \"User Click\", Toast.LENGTH_LONG).show();\r\n                           if (kartonBool) {\r\n                               chipHartija.setChipBackgroundColorResource(R.color.hartijaCrumb);\r\n                           } else if (!kartonBool)\r\n                               chipHartija.setChipBackgroundColorResource(R.color.disabledCrumb);\r\n                           for (Marker m : markers) {\r\n                               try {\r\n                                   if ((m.getTitle().equals(\"hartija\"))) {\r\n                                       m.setVisible(kartonBool);\r\n                                   }\r\n                               } catch (Exception e) {\r\n                                   e.printStackTrace();\r\n                               }\r\n                           }\r\n                       }\r\n                   });\r\n                   chipPickup.setOnClickListener(new View.OnClickListener() {\r\n                       @Override\r\n                       public void onClick(View v) {\r\n                           pickupBool = !pickupBool;\r\n                           Toast.makeText(getContext(), \"User Click\", Toast.LENGTH_LONG).show();\r\n                           if (pickupBool) {\r\n                               chipPickup.setChipBackgroundColorResource(R.color.pickupCrumb);\r\n                           } else if (!pickupBool)\r\n                               chipPickup.setChipBackgroundColorResource(R.color.disabledCrumb);\r\n                           for (Marker m : markers) {\r\n                               try {\r\n                                   if ((m.getTitle().equals(\"pickup\"))) {\r\n                                       m.setVisible(pickupBool);\r\n                                   }\r\n                               } catch (Exception e) {\r\n                                   e.printStackTrace();\r\n                               }\r\n                           }\r\n                       }\r\n                   });\r\n               }\r\n               else{\r\n                   onDataChange(dataSnapshot);\r\n               }\r\n\r\n\r\n                for (HashMap<String, String> t : map) {\r\n                    try {\r\n                        if (t.get(\"name\") != null) {\r\n                            if (t.get(\"name\").equals(\"СТАКЛО\")) {\r\n                                markers.add(mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(t.get(\"latitude\")), Double.parseDouble(t.get(\"longitude\")))).title(\"staklo\").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))));\r\n                            } else if (t.get(\"name\").equals(\"ПЛАСТИКА, ЛИМЕНКИ\")) {\r\n                                markers.add(mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(t.get(\"latitude\")), Double.parseDouble(t.get(\"longitude\")))).title(\"plastika\").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))));\r\n                            } else if (t.get(\"name\").equals(\"ХАРТИЈА, КОМПОЗИТ\")) {\r\n                                markers.add(mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(t.get(\"latitude\")), Double.parseDouble(t.get(\"longitude\")))).title(\"hartija\").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))));\r\n                            } else if (t.get(\"name\").equals(\"pickup\")) {\r\n                                markers.add(mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(t.get(\"latitude\")), Double.parseDouble(t.get(\"longitude\")))).title(\"pickup\").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))));\r\n                            }\r\n\r\n                        }\r\n                    } catch (Exception e) {\r\n                        e.printStackTrace();\r\n                    }\r\n\r\n                }\r\n            }\r\n\r\n            public void onCancelled(DatabaseError error) {\r\n                Log.w(\"TAG\", \"Failed to read value.\", error.toException());\r\n            }\r\n        });\r\n\r\n        LatLng skopje = new LatLng(41.9979484, 21.4333326);\r\n        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(skopje, 13.26f));\r\n    }\r\n\r\n    @Override\r\n    public void onResume() {\r\n        mapView.onResume();\r\n        super.onResume();\r\n    }\r\n\r\n    @Override\r\n    public void onPause() {\r\n        super.onPause();\r\n        mapView.onPause();\r\n    }\r\n\r\n    @Override\r\n    public void onDestroy() {\r\n        super.onDestroy();\r\n        mapView.onDestroy();\r\n    }\r\n\r\n    @Override\r\n    public void onLowMemory() {\r\n        super.onLowMemory();\r\n        mapView.onLowMemory();\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/test/ui/home/HomeFragment.java	(revision ec21c3c31556717c2beaf0527fd0bfd13ad94969)
++++ app/src/main/java/com/example/test/ui/home/HomeFragment.java	(date 1608252522855)
+@@ -4,6 +4,11 @@
+ import android.content.Context;
+ import android.content.pm.PackageManager;
+ import android.content.res.Resources;
++import android.graphics.Bitmap;
++import android.graphics.Canvas;
++import android.graphics.Color;
++import android.graphics.PorterDuff;
++import android.graphics.drawable.Drawable;
+ import android.location.Location;
+ import android.location.LocationListener;
+ import android.location.LocationManager;
+@@ -15,6 +20,7 @@
+ import android.widget.TextView;
+ import android.widget.Toast;
+ 
++import androidx.annotation.DrawableRes;
+ import androidx.annotation.NonNull;
+ import androidx.annotation.Nullable;
+ import androidx.core.app.ActivityCompat;
+@@ -30,6 +36,7 @@
+ import com.google.android.gms.maps.MapView;
+ import com.google.android.gms.maps.OnMapReadyCallback;
+ import com.google.android.gms.maps.SupportMapFragment;
++import com.google.android.gms.maps.model.BitmapDescriptor;
+ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+ import com.google.android.gms.maps.model.LatLng;
+ import com.google.android.gms.maps.model.MapStyleOptions;
+@@ -329,6 +336,7 @@
+                }
+ 
+ 
++
+                 for (HashMap<String, String> t : map) {
+                     try {
+                         if (t.get("name") != null) {
+Index: app/src/main/res/layout/fragment_dashboard.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:id=\"@+id/plasticsfragment\"\r\n    tools:context=\".ui.dashboard.DashboardFragment\">\r\n\r\n    <Button\r\n        android:id=\"@+id/staklo\"\r\n        android:layout_width=\"366dp\"\r\n        android:layout_height=\"150dp\"\r\n        android:layout_marginBottom=\"60dp\"\r\n        android:text=\"Стакло\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/hartija\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/hartija\"\r\n        android:layout_width=\"366dp\"\r\n        android:layout_height=\"150dp\"\r\n        android:text=\"Хартија\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/staklo\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.52\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/plastika\" />\r\n\r\n    <androidx.constraintlayout.widget.Barrier\r\n        android:id=\"@+id/barrier\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        app:barrierDirection=\"top\"\r\n        tools:layout_editor_absoluteY=\"383dp\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/plastika\"\r\n        android:layout_width=\"366dp\"\r\n        android:layout_height=\"150dp\"\r\n        android:text=\"Пластика\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/hartija\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.666\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/materijal_tekst\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/materijal_tekst\"\r\n        android:layout_width=\"362dp\"\r\n        android:layout_height=\"39dp\"\r\n        android:ems=\"12\"\r\n        android:inputType=\"none\"\r\n        android:text=\"Изберете материјал:\"\r\n        android:textIsSelectable=\"false\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/plastika\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.0\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_dashboard.xml	(revision ec21c3c31556717c2beaf0527fd0bfd13ad94969)
++++ app/src/main/res/layout/fragment_dashboard.xml	(date 1608244875834)
+@@ -7,59 +7,78 @@
+     android:id="@+id/plasticsfragment"
+     tools:context=".ui.dashboard.DashboardFragment">
+ 
++    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        android:paddingTop="50dp"
++        android:gravity="center"
++        android:orientation="vertical" >
++        <Button
++            android:id="@+id/plastika"
++            android:layout_width="366dp"
++            android:layout_height="150dp"
++            android:text="Пластика"
++            android:layout_marginBottom="30dp"
++            android:textSize="20sp"
++            app:icon="@drawable/ic_plastic_category"
++            app:iconSize="85dp"
++            app:iconGravity="textStart"
++            app:iconPadding="20dp"
++            android:paddingEnd="50dp"
++            android:paddingStart="10dp"
++        />
++
+     <Button
+         android:id="@+id/staklo"
+         android:layout_width="366dp"
+         android:layout_height="150dp"
+-        android:layout_marginBottom="60dp"
++
+         android:text="Стакло"
+-        app:layout_constraintBottom_toBottomOf="parent"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toBottomOf="@+id/hartija" />
++        android:textSize="20sp"
++        app:icon="@drawable/ic_glass_category"
++        app:iconSize="85dp"
++        app:iconGravity="textStart"
++        app:iconPadding="30dp"
++        android:paddingEnd="50dp"
++        android:paddingStart="-20dp"
++        android:layout_marginBottom="30dp"
++        />
+ 
+     <Button
+         android:id="@+id/hartija"
+         android:layout_width="366dp"
+         android:layout_height="150dp"
+         android:text="Хартија"
+-        app:layout_constraintBottom_toTopOf="@+id/staklo"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintHorizontal_bias="0.52"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toBottomOf="@+id/plastika" />
+-
+-    <androidx.constraintlayout.widget.Barrier
+-        android:id="@+id/barrier"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        app:barrierDirection="top"
+-        tools:layout_editor_absoluteY="383dp" />
++        android:textSize="20sp"
++        app:icon="@drawable/ic_paper_category"
++        app:iconSize="85dp"
++        app:iconGravity="textStart"
++        app:iconPadding="20dp"
++        android:paddingEnd="50dp"
++        android:paddingStart="0dp"
++        />
++        <androidx.constraintlayout.widget.Barrier
++            android:id="@+id/barrier"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            app:barrierDirection="top"
++            tools:layout_editor_absoluteY="383dp" />
+ 
+-    <Button
+-        android:id="@+id/plastika"
+-        android:layout_width="366dp"
+-        android:layout_height="150dp"
+-        android:text="Пластика"
+-        app:layout_constraintBottom_toTopOf="@+id/hartija"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintHorizontal_bias="0.666"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toBottomOf="@+id/materijal_tekst" />
+ 
+-    <EditText
+-        android:id="@+id/materijal_tekst"
+-        android:layout_width="362dp"
+-        android:layout_height="39dp"
+-        android:ems="12"
+-        android:inputType="none"
+-        android:text="Изберете материјал:"
+-        android:textIsSelectable="false"
+-        app:layout_constraintBottom_toTopOf="@+id/plastika"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintHorizontal_bias="0.0"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="parent"
+-        app:layout_constraintVertical_bias="0.0" />
++        <EditText
++            android:id="@+id/materijal_tekst"
++            android:layout_width="362dp"
++            android:layout_height="39dp"
++            android:ems="12"
++            android:inputType="none"
++            android:text="Изберете материјал:"
++            android:textIsSelectable="false"
++            app:layout_constraintBottom_toTopOf="@+id/plastika"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintHorizontal_bias="0.0"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toTopOf="parent"
++            app:layout_constraintVertical_bias="0.0" />
+ 
++    </LinearLayout>
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<adaptive-icon xmlns:android=\"http://schemas.android.com/apk/res/android\">\r\n    <background android:drawable=\"@drawable/ic_launcher_background\" />\r\n    <foreground android:drawable=\"@drawable/ic_launcher_foreground\" />\r\n</adaptive-icon>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml	(revision ec21c3c31556717c2beaf0527fd0bfd13ad94969)
++++ app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml	(date 1608251836165)
+@@ -1,5 +1,5 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+-    <background android:drawable="@drawable/ic_launcher_background" />
+-    <foreground android:drawable="@drawable/ic_launcher_foreground" />
++    <background android:drawable="@drawable/ic_launcher_background"/>
++    <foreground android:drawable="@drawable/ic_launcher_foreground"/>
+ </adaptive-icon>
+\ No newline at end of file
+Index: app/src/main/res/drawable/ic_launcher_background.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<vector xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:width=\"108dp\"\r\n    android:height=\"108dp\"\r\n    android:viewportWidth=\"108\"\r\n    android:viewportHeight=\"108\">\r\n    <path\r\n        android:fillColor=\"#3DDC84\"\r\n        android:pathData=\"M0,0h108v108h-108z\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M9,0L9,108\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M19,0L19,108\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M29,0L29,108\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M39,0L39,108\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M49,0L49,108\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M59,0L59,108\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M69,0L69,108\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M79,0L79,108\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M89,0L89,108\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M99,0L99,108\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M0,9L108,9\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M0,19L108,19\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M0,29L108,29\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M0,39L108,39\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M0,49L108,49\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M0,59L108,59\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M0,69L108,69\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M0,79L108,79\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M0,89L108,89\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M0,99L108,99\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M19,29L89,29\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M19,39L89,39\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M19,49L89,49\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M19,59L89,59\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M19,69L89,69\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M19,79L89,79\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M29,19L29,89\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M39,19L39,89\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M49,19L49,89\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M59,19L59,89\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M69,19L69,89\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n    <path\r\n        android:fillColor=\"#00000000\"\r\n        android:pathData=\"M79,19L79,89\"\r\n        android:strokeWidth=\"0.8\"\r\n        android:strokeColor=\"#33FFFFFF\" />\r\n</vector>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/ic_launcher_background.xml	(revision ec21c3c31556717c2beaf0527fd0bfd13ad94969)
++++ app/src/main/res/drawable/ic_launcher_background.xml	(date 1608251836270)
+@@ -1,170 +1,74 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<vector xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:width="108dp"
++<vector
+     android:height="108dp"
++    android:width="108dp"
++    android:viewportHeight="108"
+     android:viewportWidth="108"
+-    android:viewportHeight="108">
+-    <path
+-        android:fillColor="#3DDC84"
+-        android:pathData="M0,0h108v108h-108z" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M9,0L9,108"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M19,0L19,108"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M29,0L29,108"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M39,0L39,108"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M49,0L49,108"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M59,0L59,108"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M69,0L69,108"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M79,0L79,108"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M89,0L89,108"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M99,0L99,108"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M0,9L108,9"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M0,19L108,19"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M0,29L108,29"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M0,39L108,39"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M0,49L108,49"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M0,59L108,59"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M0,69L108,69"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M0,79L108,79"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M0,89L108,89"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M0,99L108,99"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M19,29L89,29"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M19,39L89,39"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M19,49L89,49"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M19,59L89,59"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M19,69L89,69"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M19,79L89,79"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M29,19L29,89"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M39,19L39,89"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M49,19L49,89"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M59,19L59,89"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M69,19L69,89"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M79,19L79,89"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
++    xmlns:android="http://schemas.android.com/apk/res/android">
++    <path android:fillColor="#3DDC84"
++          android:pathData="M0,0h108v108h-108z"/>
++    <path android:fillColor="#00000000" android:pathData="M9,0L9,108"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M19,0L19,108"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M29,0L29,108"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M39,0L39,108"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M49,0L49,108"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M59,0L59,108"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M69,0L69,108"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M79,0L79,108"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M89,0L89,108"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M99,0L99,108"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M0,9L108,9"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M0,19L108,19"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M0,29L108,29"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M0,39L108,39"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M0,49L108,49"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M0,59L108,59"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M0,69L108,69"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M0,79L108,79"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M0,89L108,89"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M0,99L108,99"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M19,29L89,29"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M19,39L89,39"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M19,49L89,49"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M19,59L89,59"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M19,69L89,69"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M19,79L89,79"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M29,19L29,89"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M39,19L39,89"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M49,19L49,89"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M59,19L59,89"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M69,19L69,89"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
++    <path android:fillColor="#00000000" android:pathData="M79,19L79,89"
++          android:strokeColor="#33FFFFFF" android:strokeWidth="0.8"/>
+ </vector>
+Index: app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<adaptive-icon xmlns:android=\"http://schemas.android.com/apk/res/android\">\r\n    <background android:drawable=\"@drawable/ic_launcher_background\" />\r\n    <foreground android:drawable=\"@drawable/ic_launcher_foreground\" />\r\n</adaptive-icon>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml	(revision ec21c3c31556717c2beaf0527fd0bfd13ad94969)
++++ app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml	(date 1608251836285)
+@@ -1,5 +1,5 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+-    <background android:drawable="@drawable/ic_launcher_background" />
+-    <foreground android:drawable="@drawable/ic_launcher_foreground" />
++    <background android:drawable="@drawable/ic_launcher_background"/>
++    <foreground android:drawable="@drawable/ic_launcher_foreground"/>
+ </adaptive-icon>
+\ No newline at end of file
