@@ -7,16 +7,51 @@
     android:id="@+id/plasticsfragment"
     tools:context=".ui.dashboard.DashboardFragment">
 
+
+
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="50dp"
+        android:id="@+id/btnsLayout"
         android:gravity="center"
         android:orientation="vertical" >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
+            android:gravity="center"
+            android:orientation="horizontal"
+
+            >
+
+            <Button
+                android:id="@+id/dodadi"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:text="Додади"
+                android:layout_marginBottom="15dp"
+
+                android:layout_marginRight="10dp"
+                />
+
+            <Button
+
+                android:id="@+id/skeniraj"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:text="Скенирај"
+                android:layout_marginBottom="15dp"
+
+                android:layout_marginLeft="10dp"
+
+                />
+
+
+        </LinearLayout>
         <TextView
             android:id="@+id/materijal_tekst"
-            android:layout_width="362dp"
+            android:layout_width="350dp"
             android:layout_height="39dp"
             android:ems="12"
             android:layout_gravity="center"
@@ -32,7 +67,7 @@
 
         <Button
             android:id="@+id/plastika"
-            android:layout_width="366dp"
+            android:layout_width="350dp"
             android:layout_height="150dp"
             android:text="Пластика"
             android:layout_marginBottom="15dp"
@@ -47,7 +82,7 @@
 
     <Button
         android:id="@+id/staklo"
-        android:layout_width="366dp"
+        android:layout_width="350dp"
         android:layout_height="150dp"
 
         android:text="Стакло"
@@ -63,7 +98,7 @@
 
     <Button
         android:id="@+id/hartija"
-        android:layout_width="366dp"
+        android:layout_width="350dp"
         android:layout_height="150dp"
         android:text="Хартија"
         android:textSize="20sp"
@@ -74,12 +109,6 @@
         android:paddingEnd="50dp"
         android:paddingStart="0dp"
         />
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="top"
-            tools:layout_editor_absoluteY="383dp" />
 
 
 

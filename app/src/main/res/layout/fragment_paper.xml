@@ -30,7 +30,7 @@
 
     <Button
         android:id="@+id/karton"
-        android:layout_width="366dp"
+        android:layout_width="350dp"
         android:layout_height="150dp"
         android:text="Картон"
         android:layout_marginBottom="15dp"
@@ -38,7 +38,7 @@
 
     <Button
         android:id="@+id/ambalaza"
-        android:layout_width="366dp"
+        android:layout_width="350dp"
         android:layout_height="150dp"
         android:text="Амбалажа"
         android:layout_marginBottom="15dp"
@@ -46,7 +46,7 @@
 
     <Button
         android:id="@+id/list"
-        android:layout_width="366dp"
+        android:layout_width="350dp"
         android:layout_height="150dp"
         android:text="Тенка хартија"
         android:textSize="20sp" />
