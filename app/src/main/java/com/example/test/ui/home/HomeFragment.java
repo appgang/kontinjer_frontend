@@ -153,7 +153,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
                             System.out.println(longitude.toString() + latitude.toString());
-                            Toast.makeText(getContext(), longitude.toString() + latitude.toString(), Toast.LENGTH_LONG).show();
                             l = latitude;
                             t = longitude;
                             // do something with Latlng
@@ -182,7 +181,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                     longitude = location.getLongitude();
                     latitude = location.getLatitude();
                     System.out.println(longitude.toString() + latitude.toString());
-                    Toast.makeText(getContext(), longitude.toString() + latitude.toString(), Toast.LENGTH_LONG).show();
                     l = latitude;
                     t = longitude;
                 }
@@ -220,7 +218,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                     fab.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(getContext(), "Add location", Toast.LENGTH_LONG).show();
                             HashMap<String, String> tempHash = new HashMap<String, String>();
                             tempHash.put("latitude", l.toString());
                             tempHash.put("longitude", t.toString());
@@ -230,110 +227,114 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
                         }
                     });
+                    FloatingActionButton fab_locate = v.findViewById(R.id.fab_locate);
+                    fab_locate.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(getContext(), "Locating..", Toast.LENGTH_LONG).show();
+                            LatLng locate = new LatLng(l, t);
+                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(locate, 17));
+                        }
+                    });
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
-               if(v!=null){
-                   map = (ArrayList<HashMap<String, String>>) dataSnapshot.getValue();
-                   final Chip chipPlastika;
-                   final Chip chipHartija;
-                   final Chip chipStaklo;
-                   final Chip chipPickup;
+                if (v != null) {
+                    map = (ArrayList<HashMap<String, String>>) dataSnapshot.getValue();
+                    final Chip chipPlastika;
+                    final Chip chipHartija;
+                    final Chip chipStaklo;
+                    final Chip chipPickup;
 
-                   chipPlastika = v.findViewById(R.id.plasticChip);
-                   chipHartija = v.findViewById(R.id.kartonChip);
-                   chipStaklo = v.findViewById(R.id.stakloChip);
-                   chipPickup = v.findViewById(R.id.chipPickup);
+                    chipPlastika = v.findViewById(R.id.plasticChip);
+                    chipHartija = v.findViewById(R.id.kartonChip);
+                    chipStaklo = v.findViewById(R.id.stakloChip);
+                    chipPickup = v.findViewById(R.id.chipPickup);
 
-                   chipStaklo.toggle();
-                   chipPlastika.toggle();
-                   chipHartija.toggle();
-                   chipPickup.toggle();
+                    chipStaklo.toggle();
+                    chipPlastika.toggle();
+                    chipHartija.toggle();
+                    chipPickup.toggle();
 
-                   chipStaklo.setOnClickListener(new View.OnClickListener() {
-                       @Override
-                       public void onClick(View v) {
-                           stakloBool = !stakloBool;
-                           Toast.makeText(getContext(), "User Click", Toast.LENGTH_LONG).show();
-                           if (stakloBool) {
-                               chipStaklo.setChipBackgroundColorResource(R.color.stakloCrumb);
-                           } else if (!stakloBool)
-                               chipStaklo.setChipBackgroundColorResource(R.color.disabledCrumb);
-                           for (Marker m : markers) {
-                               try {
-                                   if ((m.getTitle().equals("staklo"))) {
-                                       m.setVisible(stakloBool);
-                                   }
-                               } catch (Exception e) {
-                                   e.printStackTrace();
-                               }
-                           }
-                       }
-                   });
-                   chipPlastika.setOnClickListener(new View.OnClickListener() {
-                       @Override
-                       public void onClick(View v) {
-                           plastikaBool = !plastikaBool;
-                           Toast.makeText(getContext(), "User Click", Toast.LENGTH_LONG).show();
-                           if (plastikaBool) {
-                               chipPlastika.setChipBackgroundColorResource(R.color.plasticaCrumb);
-                           } else if (!plastikaBool)
-                               chipPlastika.setChipBackgroundColorResource(R.color.disabledCrumb);
-                           for (Marker m : markers) {
-                               try {
-                                   if ((m.getTitle().equals("plastika"))) {
-                                       m.setVisible(plastikaBool);
-                                   }
-                               } catch (Exception e) {
-                                   e.printStackTrace();
-                               }
-                           }
-                       }
-                   });
-                   chipHartija.setOnClickListener(new View.OnClickListener() {
-                       @Override
-                       public void onClick(View v) {
-                           kartonBool = !kartonBool;
-                           Toast.makeText(getContext(), "User Click", Toast.LENGTH_LONG).show();
-                           if (kartonBool) {
-                               chipHartija.setChipBackgroundColorResource(R.color.hartijaCrumb);
-                           } else if (!kartonBool)
-                               chipHartija.setChipBackgroundColorResource(R.color.disabledCrumb);
-                           for (Marker m : markers) {
-                               try {
-                                   if ((m.getTitle().equals("hartija"))) {
-                                       m.setVisible(kartonBool);
-                                   }
-                               } catch (Exception e) {
-                                   e.printStackTrace();
-                               }
-                           }
-                       }
-                   });
-                   chipPickup.setOnClickListener(new View.OnClickListener() {
-                       @Override
-                       public void onClick(View v) {
-                           pickupBool = !pickupBool;
-                           Toast.makeText(getContext(), "User Click", Toast.LENGTH_LONG).show();
-                           if (pickupBool) {
-                               chipPickup.setChipBackgroundColorResource(R.color.pickupCrumb);
-                           } else if (!pickupBool)
-                               chipPickup.setChipBackgroundColorResource(R.color.disabledCrumb);
-                           for (Marker m : markers) {
-                               try {
-                                   if ((m.getTitle().equals("pickup"))) {
-                                       m.setVisible(pickupBool);
-                                   }
-                               } catch (Exception e) {
-                                   e.printStackTrace();
-                               }
-                           }
-                       }
-                   });
-               }
-               else{
-                   onDataChange(dataSnapshot);
-               }
+                    chipStaklo.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            stakloBool = !stakloBool;
+                            if (stakloBool) {
+                                chipStaklo.setChipBackgroundColorResource(R.color.stakloCrumb);
+                            } else if (!stakloBool)
+                                chipStaklo.setChipBackgroundColorResource(R.color.disabledCrumb);
+                            for (Marker m : markers) {
+                                try {
+                                    if ((m.getTitle().equals("staklo"))) {
+                                        m.setVisible(stakloBool);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+                    chipPlastika.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            plastikaBool = !plastikaBool;
+                            if (plastikaBool) {
+                                chipPlastika.setChipBackgroundColorResource(R.color.plasticaCrumb);
+                            } else if (!plastikaBool)
+                                chipPlastika.setChipBackgroundColorResource(R.color.disabledCrumb);
+                            for (Marker m : markers) {
+                                try {
+                                    if ((m.getTitle().equals("plastika"))) {
+                                        m.setVisible(plastikaBool);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+                    chipHartija.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            kartonBool = !kartonBool;
+                            if (kartonBool) {
+                                chipHartija.setChipBackgroundColorResource(R.color.hartijaCrumb);
+                            } else if (!kartonBool)
+                                chipHartija.setChipBackgroundColorResource(R.color.disabledCrumb);
+                            for (Marker m : markers) {
+                                try {
+                                    if ((m.getTitle().equals("hartija"))) {
+                                        m.setVisible(kartonBool);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+                    chipPickup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            pickupBool = !pickupBool;
+                            if (pickupBool) {
+                                chipPickup.setChipBackgroundColorResource(R.color.pickupCrumb);
+                            } else if (!pickupBool)
+                                chipPickup.setChipBackgroundColorResource(R.color.disabledCrumb);
+                            for (Marker m : markers) {
+                                try {
+                                    if ((m.getTitle().equals("pickup"))) {
+                                        m.setVisible(pickupBool);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+                } else {
+
+                }
 
 
 

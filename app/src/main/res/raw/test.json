@@ -1,0 +1,60 @@
+{
+  "tipovi": [
+    {
+      "string": "plastikashishe",
+      "vreme": "450 години"
+    },
+    {
+      "string": "plastikakapache",
+      "vreme": "500 години"
+    },
+    {
+      "string": "plastikavrekjazagjubre",
+      "vreme": "500 години"
+    },
+    {
+      "string": "plastikasredstvocistenje",
+      "vreme": "1200 години"
+    },
+    {
+      "string": "plastikakesa",
+      "vreme": "450 години"
+    },
+    {
+      "string": "plastikacoffee2go",
+      "vreme": "1000 години"
+    },
+    {
+      "string": "plastikastiropor",
+      "vreme": "Преку 1000 години"
+    },
+    {
+      "string": "plastikatelefon",
+      "vreme": "1 година"
+    },
+    {
+      "string": "plastika3dprint",
+      "vreme": "1 година"
+    },
+    {
+      "string": "plastikacetkazazabi",
+      "vreme": "6 месеци"
+    },
+    {
+      "string": "hartijakarton",
+      "vreme": "3 месеци"
+    },
+    {
+      "string": "hartijaambalaza",
+      "vreme": "2 месеци"
+    },
+    {
+      "string": "hartijatenka",
+      "vreme": "1 месец"
+    },
+    {
+      "string": "staklo",
+      "vreme": "1 милион години"
+    }
+  ]
+}
