@@ -1,23 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="5dip">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="16sp"
+    android:layout_marginEnd="16sp"
+    >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="@drawable/item_box"
+            >
 
-    <ImageView
-        android:id="@+id/icon_list"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:src="@drawable/ic_plastic_category"></ImageView>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                app:tint="@android:color/white"
+                android:src="@drawable/ic_plastic_category"
+                android:id="@+id/icon_list" />
 
-    <TextView
-        android:id="@+id/listview"
-        android:layout_width="206dp"
-        android:layout_height="51dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="-51dp"
-        android:layout_marginEnd="47dp"
-        android:layout_toEndOf="@+id/icon_list"
-        android:text="sasaatassa" />
-</RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/listview"
+                android:layout_width="206dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="-71dp"
+                android:layout_marginEnd="47dp"
+                android:layout_toEndOf="@+id/icon_list"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:text="sasaatassa" />
+
+
+
+        </RelativeLayout>
+
+
+
+</LinearLayout>
