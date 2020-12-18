@@ -30,76 +30,81 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="20"
-                android:text="Изберете отпадок:"/>
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:paddingBottom="15dp"
+                android:text="Изберете отпадок"/>
 
             <Button
                 android:id="@+id/shishe"
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 android:text="Шише" />
 
             <Button
                 android:id="@+id/kapache"
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 android:text="Капаче" />
 
             <Button
                 android:id="@+id/vrekja"
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 android:text="Вреќа за ѓубре" />
 
             <Button
                 android:id="@+id/sredstvo"
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 android:text="Средство за чистење" />
 
             <Button
                 android:id="@+id/kesa"
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 android:text="Кеса" />
 
             <Button
                 android:id="@+id/coffee2go"
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 android:text="Чашка за кафе" />
 
             <Button
                 android:id="@+id/stiropor"
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 android:text="Стиропор" />
 
             <Button
                 android:id="@+id/telefon"
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 android:text="Телефон" />
 
             <Button
                 android:id="@+id/print3d"
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 android:text="3д принт" />
 
             <Button
                 android:id="@+id/cetka"
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 android:text="Четка за заби" />
         </LinearLayout>
     </ScrollView>
