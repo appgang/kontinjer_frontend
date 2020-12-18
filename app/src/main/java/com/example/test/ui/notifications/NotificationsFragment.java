@@ -60,8 +60,6 @@ public class NotificationsFragment extends Fragment {
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,

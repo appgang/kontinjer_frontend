@@ -16,8 +16,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 public class FinalFragment extends Fragment {
     private String kombinacija = "";
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -28,23 +32,32 @@ public class FinalFragment extends Fragment {
         kombinacija = args.getString("string", "");
         System.out.println(kombinacija);
         try {
-            JSONObject object = new JSONObject("tipovi.json");
+            String json = null;
+            try {
+                InputStream is = getContext().getResources().openRawResource(R.raw.test);
+                int size = is.available();
+                byte[] buffer = new byte[size];
+                is.read(buffer);
+                is.close();
+                json = new String(buffer, "UTF-8");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                return null;
+            }
+            JSONObject object = new JSONObject(json);
             JSONArray array = object.getJSONArray("tipovi");
-            for (int i=0; i<array.length(); i++)
-            {
+            for (int i = 0; i < array.length(); i++) {
                 JSONObject tip = array.getJSONObject(i);
                 String kombo = tip.getString("string");
                 System.out.println(kombo);
-                if (kombinacija==kombo)
-                {
+                System.out.println(kombinacija);
+                if (kombinacija.equals(kombo)) {
                     String vreme = tip.getString("vreme");
                     TextView view = root.findViewById(R.id.textView);
-                    view.setText(kombo);
+                    view.setText(tip.getString("vreme"));
                 }
             }
-        }
-        catch (JSONException e)
-        {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return root;
