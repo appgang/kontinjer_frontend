@@ -7,27 +7,32 @@
     android:layout_height="match_parent"
     tools:context=".ui.notifications.NotificationsFragment" >
 
+
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="60dp"
+        android:layout_marginTop="40dp"
+        android:weightSum="30">
     <ListView
         android:id="@+id/listview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="29"
         />
 
         <Button
             android:id="@+id/outlinedButton"
             style="?attr/materialButtonOutlinedStyle"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:gravity="bottom"
-            android:layout_below="@+id/listview"
+            android:layout_gravity="center"
             android:text="Scan Product"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_weight="1"
+  />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
