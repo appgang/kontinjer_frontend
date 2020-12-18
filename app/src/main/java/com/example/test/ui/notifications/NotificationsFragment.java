@@ -38,8 +38,8 @@ import java.util.List;
 public class NotificationsFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
-    ArrayList<String> listItems = new ArrayList<>();
-    ArrayAdapter<String> adapter;
+    ArrayList<RecycledItems> listItems = new ArrayList<>();
+    RecycledAdapter adapter;
     AppDatabase db;
     Activity v;
 
@@ -57,6 +57,7 @@ public class NotificationsFragment extends Fragment {
         super.onDetach();
         v = null;
     }
+
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -70,13 +71,11 @@ public class NotificationsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
 
         final Button buttonScan = root.findViewById(R.id.outlinedButton);
-        try{
-            adapter = new ArrayAdapter<String>(v.getApplicationContext(),R.layout.listview_recycled , listItems);
+        try {
+            adapter = new RecycledAdapter(this.getContext(), listItems);
             ListView listRecycled = (ListView) root.findViewById(R.id.listview);
             listRecycled.setAdapter(adapter);
-            listItems.add("test");
-            adapter.notifyDataSetChanged();
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
 
@@ -88,23 +87,27 @@ public class NotificationsFragment extends Fragment {
                     }
                 }
         );
-
-        Thread thread = new Thread() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                System.out.println("WORKING");
-                db = AppDatabase.getInstance(getContext());
-                List<RecycledItems> ril = db.recycledItemsDAO().getAll();
-                for (RecycledItems r : ril) {
-                    System.out.println(r.item);
-                    listItems.add(r.item);
-                    adapter.notifyDataSetChanged();
-                }
+                Thread thread = new Thread() {
+                    @Override
+                    public void run() {
+                        System.out.println("WORKING");
+                        db = AppDatabase.getInstance(getContext());
+                        List<RecycledItems> ril = db.recycledItemsDAO().getAll();
+                        for (RecycledItems r : ril) {
+                            System.out.println(r.item);
+                            listItems.add(r);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                };
+                thread.start();
             }
-        };
+        });
 
 
-        thread.start();
         return root;
 
     }
