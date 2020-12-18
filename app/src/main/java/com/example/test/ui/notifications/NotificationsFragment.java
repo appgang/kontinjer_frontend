@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,23 +87,19 @@ public class NotificationsFragment extends Fragment {
                     }
                 }
         );
-        getActivity().runOnUiThread(new Runnable() {
+
+        Handler thread = new Handler(Looper.getMainLooper());
+        thread.post(new Runnable() {
             @Override
             public void run() {
-                Thread thread = new Thread() {
-                    @Override
-                    public void run() {
-                        System.out.println("WORKING");
-                        db = AppDatabase.getInstance(getContext());
-                        List<RecycledItems> ril = db.recycledItemsDAO().getAll();
-                        for (RecycledItems r : ril) {
-                            System.out.println(r.item);
-                            listItems.add(r);
-                            adapter.notifyDataSetChanged();
-                        }
-                    }
-                };
-                thread.start();
+                System.out.println("WORKING");
+                db = AppDatabase.getInstance(getContext());
+                List<RecycledItems> ril = db.recycledItemsDAO().getAll();
+                for (RecycledItems r : ril) {
+                    System.out.println(r.item);
+                    listItems.add(r);
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
 

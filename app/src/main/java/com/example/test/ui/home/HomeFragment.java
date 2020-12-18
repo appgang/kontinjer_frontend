@@ -100,7 +100,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-
         return root;
     }
 
@@ -135,6 +134,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private void getDeviceLocation() {
         Double latitude, longitude;
         System.out.println("GETTING LOCATION");
+
         try {
             if (locationPermissionGranted) {
                 System.out.println("PERMISISON GRANTED");
@@ -189,7 +189,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             Log.e("Exception: %s", e.getMessage(), e);
         }
     }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         final GoogleMap mMap = googleMap;

@@ -13,7 +13,8 @@ public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;
     public static synchronized AppDatabase getInstance(Context context){
         if(instance==null){
-            instance = Room.databaseBuilder(context.getApplicationContext(),AppDatabase.class,"recycleditems").fallbackToDestructiveMigration().build();
+            //cheat... sredi .allowMainThreadQueries()
+            instance = Room.databaseBuilder(context.getApplicationContext(),AppDatabase.class,"recycleditems").fallbackToDestructiveMigration().allowMainThreadQueries().build();
         }
         return instance;
     }
