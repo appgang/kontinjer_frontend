@@ -47,14 +47,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materijal_tekst" />
 
-    <EditText
+    <TextView
         android:id="@+id/materijal_tekst"
         android:layout_width="362dp"
         android:layout_height="39dp"
-        android:ems="12"
-        android:inputType="none"
+        android:ems="20"
         android:text="Изберете материјал:"
-        android:textIsSelectable="false"
         app:layout_constraintBottom_toTopOf="@+id/plastika"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

@@ -7,14 +7,12 @@
     android:id="@+id/paperfragment"
     tools:context=".ui.dashboard.PaperFragment">
 
-    <EditText
+    <TextView
         android:id="@+id/otpadok_tekst"
         android:layout_width="362dp"
         android:layout_height="39dp"
-        android:ems="12"
-        android:inputType="none"
+        android:ems="20"
         android:text="Изберете отпадок:"
-        android:textIsSelectable="false"
         app:layout_constraintBottom_toTopOf="@+id/karton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

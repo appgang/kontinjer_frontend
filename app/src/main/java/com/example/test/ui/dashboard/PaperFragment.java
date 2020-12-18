@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,51 +23,41 @@ public class PaperFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_paper, container, false);
-        Bundle args = getArguments();
-        kombinacija = args.getString("string", "");
-        EditText otpadok = root.findViewById(R.id.otpadok_tekst);
+        Bundle args = this.getArguments();
+        kombinacija = args.getString("string");
+        System.out.println(kombinacija);
+        TextView otpadok = root.findViewById(R.id.otpadok_tekst);
         otpadok.setFocusable(false);
         kopce1 = root.findViewById(R.id.karton);
         kopce1.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View view) {
-                kombinacija += "karton";
-                Fragment fragment = null;
-                fragment = new PlasticsFragment();
-                replaceFragment(fragment);
-                newInstance(kombinacija);
+                replaceFragment(formatFragment("karton", new FinalFragment()));
             }
         });
         kopce2 = root.findViewById(R.id.ambalaza);
         kopce2.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View view) {
-                kombinacija += "ambalaza";
-                Fragment fragment = null;
-                fragment = new PaperFragment();
-                replaceFragment(fragment);
-                newInstance(kombinacija);
+                replaceFragment(formatFragment("ambalaza", new FinalFragment()));
             }
         });
         kopce3 = root.findViewById(R.id.list);
         kopce3.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View view) {
-                kombinacija += "tenka";
-                Fragment fragment = null;
-                fragment = new FinalFragment();
-                replaceFragment(fragment);
-                newInstance(kombinacija);
+                replaceFragment(formatFragment("tenka", new FinalFragment()));
             }
         });
         return root;
     }
+
     public void replaceFragment(Fragment fragment) {
-        getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new FinalFragment()).addToBackStack(null).commit();
+        getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, fragment).addToBackStack(null).commit();
     }
-    public static PaperFragment newInstance(String string) {
-        PaperFragment f = new PaperFragment();
-        // Supply index input as an argument.
+
+    public Fragment formatFragment(String string, Fragment fragment) {
+        kombinacija += string;
         Bundle args = new Bundle();
-        args.putString("string", string);
-        f.setArguments(args);
-        return f;
+        args.putString("string", kombinacija);
+        fragment.setArguments(args);
+        return fragment;
     }
 }

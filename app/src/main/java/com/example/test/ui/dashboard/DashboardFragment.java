@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -30,7 +31,7 @@ public class DashboardFragment extends Fragment {
                 textView.setText(s);
             }
         });*/
-        EditText materijal = root.findViewById(R.id.materijal_tekst);
+        TextView materijal = root.findViewById(R.id.materijal_tekst);
         materijal.setFocusable(false);
         //final Fragment fragment = null;
         kopce1 = root.findViewById(R.id.plastika);

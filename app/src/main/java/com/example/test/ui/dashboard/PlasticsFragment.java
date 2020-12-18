@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
@@ -15,10 +16,8 @@ import androidx.annotation.Nullable;
 import com.example.test.R;
 
 public class PlasticsFragment extends Fragment {
-
     private String kombinacija = "";
     private Button kopce1, kopce2, kopce3, kopce4, kopce5, kopce6, kopce7, kopce8, kopce9, kopce10;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -28,7 +27,7 @@ public class PlasticsFragment extends Fragment {
         Bundle args = this.getArguments();
         kombinacija = args.getString("string");
         System.out.println(kombinacija);
-        EditText otpadok = root.findViewById(R.id.otpadok_tekst);
+        TextView otpadok = root.findViewById(R.id.otpadok_tekst);
         otpadok.setFocusable(false);
         kopce1 = root.findViewById(R.id.shishe);
         kopce1.setOnClickListener(new Button.OnClickListener() {
