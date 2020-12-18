@@ -94,6 +94,14 @@ public class NotificationsFragment extends Fragment {
             public void run() {
                 System.out.println("WORKING");
                 db = AppDatabase.getInstance(getContext());
+                try {
+                    RecycledItems r1 = new RecycledItems(223, "staklo", "sise");
+                    RecycledItems r2 = new RecycledItems(234, "plastika", "kese");
+                    db.recycledItemsDAO().insertItem(r1);
+                    db.recycledItemsDAO().insertItem(r2);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 List<RecycledItems> ril = db.recycledItemsDAO().getAll();
                 for (RecycledItems r : ril) {
                     System.out.println(r.item);
