@@ -32,7 +32,10 @@
                 android:text="Додади"
                 android:layout_marginBottom="15dp"
 
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                app:icon="@drawable/ic_plus"
+                app:iconSize="15dp"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                 />
 
             <Button
@@ -42,8 +45,10 @@
                 android:layout_height="50dp"
                 android:text="Скенирај"
                 android:layout_marginBottom="15dp"
-
-                android:layout_marginLeft="10dp"
+                android:layout_marginEnd="10dp"
+                app:icon="@drawable/ic_lupa"
+                app:iconSize="15dp"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
 
                 />
 
