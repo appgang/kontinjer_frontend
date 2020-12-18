@@ -16,10 +16,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_width="366dp"
+
             android:orientation="vertical"
-            android:translationY="15dp">
+            android:layout_gravity="center"
+
+           >
+
 
             <TextView
                 android:id="@+id/otpadok_tekst"
@@ -32,60 +36,70 @@
                 android:id="@+id/shishe"
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
+                android:layout_marginBottom="10dp"
                 android:text="Шише" />
 
             <Button
                 android:id="@+id/kapache"
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
+                android:layout_marginBottom="10dp"
                 android:text="Капаче" />
 
             <Button
                 android:id="@+id/vrekja"
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
+                android:layout_marginBottom="10dp"
                 android:text="Вреќа за ѓубре" />
 
             <Button
                 android:id="@+id/sredstvo"
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
+                android:layout_marginBottom="10dp"
                 android:text="Средство за чистење" />
 
             <Button
                 android:id="@+id/kesa"
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
+                android:layout_marginBottom="10dp"
                 android:text="Кеса" />
 
             <Button
                 android:id="@+id/coffee2go"
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
+                android:layout_marginBottom="10dp"
                 android:text="Чашка за кафе" />
 
             <Button
                 android:id="@+id/stiropor"
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
+                android:layout_marginBottom="10dp"
                 android:text="Стиропор" />
 
             <Button
                 android:id="@+id/telefon"
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
+                android:layout_marginBottom="10dp"
                 android:text="Телефон" />
 
             <Button
                 android:id="@+id/print3d"
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
+                android:layout_marginBottom="10dp"
                 android:text="3д принт" />
 
             <Button
                 android:id="@+id/cetka"
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
+                android:layout_marginBottom="10dp"
                 android:text="Четка за заби" />
         </LinearLayout>
     </ScrollView>

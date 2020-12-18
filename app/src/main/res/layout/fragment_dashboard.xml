@@ -7,57 +7,78 @@
     android:id="@+id/plasticsfragment"
     tools:context=".ui.dashboard.DashboardFragment">
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="50dp"
+        android:gravity="center"
+        android:orientation="vertical" >
+        <Button
+            android:id="@+id/plastika"
+            android:layout_width="366dp"
+            android:layout_height="150dp"
+            android:text="Пластика"
+            android:layout_marginBottom="30dp"
+            android:textSize="20sp"
+            app:icon="@drawable/ic_plastic_category"
+            app:iconSize="85dp"
+            app:iconGravity="textStart"
+            app:iconPadding="20dp"
+            android:paddingEnd="50dp"
+            android:paddingStart="10dp"
+        />
+
     <Button
         android:id="@+id/staklo"
         android:layout_width="366dp"
         android:layout_height="150dp"
-        android:layout_marginBottom="60dp"
+
         android:text="Стакло"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hartija" />
+        android:textSize="20sp"
+        app:icon="@drawable/ic_glass_category"
+        app:iconSize="85dp"
+        app:iconGravity="textStart"
+        app:iconPadding="30dp"
+        android:paddingEnd="50dp"
+        android:paddingStart="-20dp"
+        android:layout_marginBottom="30dp"
+        />
 
     <Button
         android:id="@+id/hartija"
         android:layout_width="366dp"
         android:layout_height="150dp"
         android:text="Хартија"
-        app:layout_constraintBottom_toTopOf="@+id/staklo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/plastika" />
+        android:textSize="20sp"
+        app:icon="@drawable/ic_paper_category"
+        app:iconSize="85dp"
+        app:iconGravity="textStart"
+        app:iconPadding="20dp"
+        android:paddingEnd="50dp"
+        android:paddingStart="0dp"
+        />
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="top"
+            tools:layout_editor_absoluteY="383dp" />
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="top"
-        tools:layout_editor_absoluteY="383dp" />
 
-    <Button
-        android:id="@+id/plastika"
-        android:layout_width="366dp"
-        android:layout_height="150dp"
-        android:text="Пластика"
-        app:layout_constraintBottom_toTopOf="@+id/hartija"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materijal_tekst" />
+        <EditText
+            android:id="@+id/materijal_tekst"
+            android:layout_width="362dp"
+            android:layout_height="39dp"
+            android:ems="12"
+            android:inputType="none"
+            android:text="Изберете материјал:"
+            android:textIsSelectable="false"
+            app:layout_constraintBottom_toTopOf="@+id/plastika"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/materijal_tekst"
-        android:layout_width="362dp"
-        android:layout_height="39dp"
-        android:ems="20"
-        android:text="Изберете материјал:"
-        app:layout_constraintBottom_toTopOf="@+id/plastika"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
