@@ -46,13 +46,16 @@ public class DashboardFragment extends Fragment {
                 replaceFragment(formatFragment("hartija", new PaperFragment()));
             }
         });
-        kopce3 = root.findViewById(R.id.staklo);
-        kopce3.setOnClickListener(new Button.OnClickListener() {
+        //kopce3 = root.findViewById(R.id.staklo);
+        /*kopce3.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View view) {
                 replaceFragment(formatFragment("staklo", new FinalFragment()));
             }
-        });
+        });*/
         return root;
+    }
+    public void smeni(View view){
+        replaceFragment(formatFragment("staklo", new FinalFragment()));
     }
 
     public void replaceFragment(Fragment fragment) {

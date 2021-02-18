@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="60dp"
         android:fillViewport="true">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/btnsLayout"
@@ -90,21 +90,20 @@
             android:paddingStart="10dp"
         />
 
-    <Button
-        android:id="@+id/staklo"
-        android:layout_width="350dp"
-        android:layout_height="150dp"
+        <Button
+            android:id="@+id/staklo"
+            android:layout_width="350dp"
+            android:layout_height="150dp"
 
-        android:text="Стакло"
-        android:textSize="20sp"
-        app:icon="@drawable/ic_glass_category"
-        app:iconSize="85dp"
-        app:iconGravity="textStart"
-        app:iconPadding="30dp"
-        android:paddingEnd="50dp"
-        android:paddingStart="-20dp"
-        android:layout_marginBottom="15dp"
-        />
+            android:layout_marginBottom="15dp"
+            android:paddingStart="-20dp"
+            android:paddingEnd="50dp"
+            android:text="Стакло"
+            android:textSize="20sp"
+            app:icon="@drawable/ic_glass_category"
+            app:iconGravity="textStart"
+            app:iconPadding="30dp"
+            app:iconSize="85dp" />
 
     <Button
         android:id="@+id/hartija"
