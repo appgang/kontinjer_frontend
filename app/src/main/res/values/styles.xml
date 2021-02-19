@@ -3,13 +3,25 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Base.Theme.MaterialComponents.Light">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+
+
+        <item name="colorPrimary">@color/bgr</item>
+        <item name="colorPrimaryDark">@color/bgr</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/activityBackground</item>
+        <item name="android:windowBackground">@color/bgr</item>
         <item name="bottomNavigationStyle">@style/Widget.MaterialComponents.BottomNavigationView.Colored</item>
         <item name="colorControlHighlight">@color/colorPrimaryRipple</item>
+        <item name="materialButtonStyle">@style/Button.MyTheme</item>
 
+    </style>
+
+
+    <style name="Button.MyTheme" parent="Widget.MaterialComponents.Button">
+        <item name="materialThemeOverlay">@style/ButtonStyleTextColor</item>
+    </style>
+
+    <style name="ButtonStyleTextColor">
+        <item name="colorPrimary">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -17,8 +29,12 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat" />
+    <style name="MyActionBar" parent="@style/ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="android:background">#fff</item>
+    </style>
 
 </resources>

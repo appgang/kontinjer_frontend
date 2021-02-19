@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#567568</color>
-    <color name="colorPrimaryDark">#1D5A29</color>
-    <color name="colorAccent">#257535</color>
+    <color name="colorPrimary">#59786B</color>
+    <color name="colorPrimaryDark">#425a50</color>
+    <color name="colorAccent">#59786B</color>
     <color name="disabledCrumb">#464A4A</color>
     <color name="stakloCrumb">#FFC107</color>
     <color name="plasticaCrumb">#03A9F4</color>
     <color name="hartijaCrumb">#E91E63</color>
     <color name="pickupCrumb">#4CAF50</color>
-    <color name="activityBackground">#202030</color>
     <color name="bgr">#202030</color>
     <color name="test">#806C8A7A</color>
     <color name="colorPrimaryRipple">#423F51B5</color>
