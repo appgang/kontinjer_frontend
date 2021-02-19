@@ -1,53 +1,39 @@
-package com.example.test.ui.notifications;
+package com.example.test.ui.statistics;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.room.Room;
 
 import com.example.test.AppDatabase;
 import com.example.test.R;
-import com.example.test.ui.home.HomeFragment;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationsFragment extends Fragment {
+public class StatisticsFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
+    private StatisticsViewModel statisticsViewModel;
     ArrayList<RecycledItems> listItems = new ArrayList<>();
     RecycledAdapter adapter;
     AppDatabase db;
     Activity v;
-
+    private String kombinacija = "";
+    private Button kopce1, kopce2, kopce3;
+    private View view;
 
     @Override
-    public void onAttach(@NonNull Context context) {
+   /* public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof Activity) {
             v = (Activity) context;
@@ -58,19 +44,24 @@ public class NotificationsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         v = null;
-    }
+    }*/
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+
+
+
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                ViewModelProviders.of(this).get(NotificationsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_notifications, container, false);
+        statisticsViewModel =
+                ViewModelProviders.of(this).get(StatisticsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_statistics, container, false);
 
-        final Button buttonScan = root.findViewById(R.id.outlinedButton);
+
         try {
             adapter = new RecycledAdapter(this.getContext(), listItems);
             ListView listRecycled = (ListView) root.findViewById(R.id.listview);
@@ -78,7 +69,7 @@ public class NotificationsFragment extends Fragment {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-
+       /* final Button buttonScan = root.findViewById(R.id.outlinedButton);
         buttonScan.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -86,7 +77,46 @@ public class NotificationsFragment extends Fragment {
                         scanCode();
                     }
                 }
-        );
+        );*/
+
+
+
+
+        kopce1 = root.findViewById(R.id.reciklirano);
+        kopce2 = root.findViewById(R.id.statistics);
+        kopce1.setOnClickListener(new ToggleButton.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                    System.out.println("WORKafafafaING");
+
+                //kopce2.setChecked(false);
+                kopce2.setBackgroundDrawable(getResources().getDrawable(R.drawable.round_button));
+
+                replaceFragment(formatFragment("reciklirano", new RecikliranoTabFragment()));
+
+
+
+            }
+        });
+
+
+        kopce2.setOnClickListener(new ToggleButton.OnClickListener() {
+            public void onClick(View view) {
+                kopce1.setBackgroundDrawable(getResources().getDrawable(R.drawable.round_button));
+
+                replaceFragment(formatFragment("statistika", new StatistikaTabFragment()));
+            }
+        });
+
+
+
+
+
+
+
+
+
 
         Handler thread = new Handler(Looper.getMainLooper());
         thread.post(new Runnable() {
@@ -117,7 +147,7 @@ public class NotificationsFragment extends Fragment {
     }
 
 
-    public void scanCode() {
+   /* public void scanCode() {
         IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
         integrator.setCaptureActivity(CapatureAct.class);
         integrator.setOrientationLocked(false);
@@ -153,6 +183,16 @@ public class NotificationsFragment extends Fragment {
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
-    }
+    }*/
+   public void replaceFragment(Fragment fragment) {
+       getFragmentManager().beginTransaction().replace(R.id.tab_placeholder, fragment).addToBackStack(null).commit();
+   }
 
+    public Fragment formatFragment(String string, Fragment fragment) {
+        kombinacija += string;
+        Bundle args = new Bundle();
+        args.putString("string", kombinacija);
+        fragment.setArguments(args);
+        return fragment;
+    }
 }

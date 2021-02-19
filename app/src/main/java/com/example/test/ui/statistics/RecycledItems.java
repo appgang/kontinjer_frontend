@@ -1,4 +1,4 @@
-package com.example.test.ui.notifications;
+package com.example.test.ui.statistics;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

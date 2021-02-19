@@ -1,4 +1,4 @@
-package com.example.test.ui.dashboard;
+package com.example.test.ui.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

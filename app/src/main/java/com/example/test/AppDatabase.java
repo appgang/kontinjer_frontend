@@ -5,8 +5,8 @@ import android.content.Context;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.Database;
-import com.example.test.ui.notifications.RecycledItems;
-import com.example.test.ui.notifications.RecycledItemsDAO;
+import com.example.test.ui.statistics.RecycledItems;
+import com.example.test.ui.statistics.RecycledItemsDAO;
 
 @Database(entities = {RecycledItems.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {

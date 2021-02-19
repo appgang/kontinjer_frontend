@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.statistics.StatistikaTabFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+        <Button
+            android:id="@+id/staklo"
+            android:layout_width="350dp"
+            android:layout_height="250dp"
+            android:backgroundTint="@color/hartijaCrumb"
+            android:layout_marginBottom="15dp"
+            android:paddingStart="-20dp"
+            android:paddingEnd="50dp"
+            android:text="HAHSASHSDH"
+            android:textSize="20sp"
+            app:icon="@drawable/ic_glass_category"
+            app:iconGravity="textStart"
+            app:iconPadding="30dp"
+            app:iconSize="85dp" />
+        <Button
+            android:id="@+id/stafafaklo"
+            android:layout_width="350dp"
+            android:layout_height="250dp"
+            android:backgroundTint="@color/hartijaCrumb"
+            android:layout_marginBottom="15dp"
+            android:paddingStart="-20dp"
+            android:paddingEnd="50dp"
+            android:text="HSHSHSHSHSS"
+            android:textSize="20sp"
+            app:icon="@drawable/ic_glass_category"
+            app:iconGravity="textStart"
+            app:iconPadding="30dp"
+            app:iconSize="85dp" />
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment" />
+
+
+</FrameLayout>

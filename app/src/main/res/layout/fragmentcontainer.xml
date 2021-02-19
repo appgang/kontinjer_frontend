@@ -9,9 +9,9 @@
     <fragment
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.example.test.ui.dashboard.PlasticsFragment"
+        android:name="com.example.test.ui.home.PlasticsFragment"
         android:id="@+id/plasticf"
-        tools:layout="@layout/fragment_dashboard">
+        tools:layout="@layout/fragment_home">
     </fragment>
 </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
