@@ -4,63 +4,68 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import com.example.test.AppDatabase;
 import com.example.test.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link StatistikaTabFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class StatistikaTabFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    ArrayList<RecycledItems> listItems = new ArrayList<>();
+    RecycledAdapter adapter;
+    AppDatabase db;
     public StatistikaTabFragment() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment StatistikaTabFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static StatistikaTabFragment newInstance(String param1, String param2) {
-        StatistikaTabFragment fragment = new StatistikaTabFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_statistika_tab, container, false);
+        View root = inflater.inflate(R.layout.fragment_statistika_tab, container, false);
+
+
+        try {
+            adapter = new RecycledAdapter(this.getContext(), listItems);
+            ListView listRecycled = (ListView) root.findViewById(R.id.listview);
+            listRecycled.setAdapter(adapter);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        Handler thread = new Handler(Looper.getMainLooper());
+        thread.post(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("WORKING");
+                db = AppDatabase.getInstance(getContext());
+                try {
+                    RecycledItems r1 = new RecycledItems(223, "staklo", "sise");
+                    RecycledItems r2 = new RecycledItems(234, "plastika", "kese");
+                    db.recycledItemsDAO().insertItem(r1);
+                    db.recycledItemsDAO().insertItem(r2);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                List<RecycledItems> ril = db.recycledItemsDAO().getAll();
+                for (RecycledItems r : ril) {
+                    System.out.println(r.item);
+                    listItems.add(r);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+        return root;
     }
 }

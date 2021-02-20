@@ -2,29 +2,27 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item  android:state_enabled="false" >
+        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <solid android:color="@color/colorPrimary" />
+            <corners android:radius="54dp"/>
+            <padding android:left="0dp" android:top="0dp" android:right="0dp" android:bottom="0dp" />
+        </shape>
 
+    </item>
     <item  android:state_checked="true"    >
     <shape xmlns:android="http://schemas.android.com/apk/res/android">
-        <solid android:color="@color/hartijaCrumb"/>
+        <solid android:color="@color/colorPrimary" />
 
         <corners android:radius="54dp"/>
         <padding android:left="0dp" android:top="0dp" android:right="0dp" android:bottom="0dp" />
     </shape>
 
-</item>
-    <item android:state_focused="true" android:state_pressed="false"
-        >
-    <shape xmlns:android="http://schemas.android.com/apk/res/android">
-        <solid android:color="@color/hartijaCrumb"/>
-
-        <corners android:radius="54dp"/>
-        <padding android:left="0dp" android:top="0dp" android:right="0dp" android:bottom="0dp" />
-    </shape>
 </item>
     <item >
-
         <shape xmlns:android="http://schemas.android.com/apk/res/android">
-            <solid android:color="@color/colorPrimary"/>
+            <solid android:color="@color/bgr"
+                />
 
             <corners android:radius="54dp"/>
             <padding android:left="0dp" android:top="0dp" android:right="0dp" android:bottom="0dp" />
