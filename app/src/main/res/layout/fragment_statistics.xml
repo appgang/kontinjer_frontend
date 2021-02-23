@@ -23,7 +23,7 @@
         >
 
         <ToggleButton
-            android:id="@+id/reciklirano"
+            android:id="@+id/statistics"
             android:layout_width="150dp"
             android:layout_height="40dp"
             android:textOn="Статистика"
@@ -35,7 +35,7 @@
             />
 
         <ToggleButton
-            android:id="@+id/statistics"
+            android:id="@+id/reciklirano"
             android:layout_width="150dp"
             android:layout_height="40dp"
             android:textOn="Рециклирано"

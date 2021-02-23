@@ -29,7 +29,7 @@ public class StatisticsFragment extends Fragment {
     AppDatabase db;
     Activity v;
     private String kombinacija = "";
-    private Button kopce1, kopce2, kopce3;
+
     private View view;
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
