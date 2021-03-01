@@ -51,10 +51,10 @@ public class StatistikaTabFragment extends Fragment {
                 System.out.println("WORKING");
                 db = AppDatabase.getInstance(getContext());
                 try {
-                    RecycledItems r1 = new RecycledItems(223, "staklo", "sise");
+                 /*   RecycledItems r1 = new RecycledItems(223, "staklo", "sise");
                     RecycledItems r2 = new RecycledItems(234, "plastika", "kese");
                     db.recycledItemsDAO().insertItem(r1);
-                    db.recycledItemsDAO().insertItem(r2);
+                    db.recycledItemsDAO().insertItem(r2);*/
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

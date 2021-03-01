@@ -25,7 +25,7 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private String kombinacija = "";
-    private Button kopce1, kopce2, kopce3;
+    private Button kopce1, kopce2, kopce3, dodadi;
     private View view;
     Activity v;
 
@@ -64,6 +64,12 @@ public class HomeFragment extends Fragment {
                     }
                 }
         );
+        dodadi = root.findViewById(R.id.dodadi);
+        dodadi.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View view) {
+                replaceFragment(formatFragment("plastika", new PlasticsFragment()));
+            }
+        });
         TextView materijal = root.findViewById(R.id.materijal_tekst);
         materijal.setFocusable(false);
         //final Fragment fragment = null;

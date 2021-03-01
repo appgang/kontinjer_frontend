@@ -50,23 +50,23 @@ public class RecikliranoTabFragment extends Fragment {
                 System.out.println("WORKING");
                 db = AppDatabase.getInstance(getContext());
                 try {
-                    RecycledItems r1 = new RecycledItems(223, "staklo", "sise");
-                    RecycledItems r2 = new RecycledItems(234, "plastika", "kese");
-                    RecycledItems r3 = new RecycledItems(223, "staklo", "rr");
-                    RecycledItems r4 = new RecycledItems(236, "plastika", "kerrse");
-                    RecycledItems r5 = new RecycledItems(227, "staklo", "r3");
-                    RecycledItems r6 = new RecycledItems(238, "plastika", "kesre");
-                    RecycledItems r7 = new RecycledItems(229, "staklo", "sisre");
-                    RecycledItems r8 = new RecycledItems(231, "plastika", "kerse");
+                   /* RecycledItems r1 = new RecycledItems(1, "staklo", "sise");
+                   // RecycledItems r2 = new RecycledItems(234, "plastika", "kese");
+                    RecycledItems r3 = new RecycledItems(2, "staklo", "rr");
+                    RecycledItems r4 = new RecycledItems(3, "plastika", "kerrse");
+                    RecycledItems r5 = new RecycledItems(4, "staklo", "r3");
+                    RecycledItems r6 = new RecycledItems(5, "plastika", "kesre");
+                    RecycledItems r7 = new RecycledItems(6, "staklo", "sisre");
+                    RecycledItems r8 = new RecycledItems(7, "plastika", "kerse");
                     db.recycledItemsDAO().insertItem(r1);
-                    db.recycledItemsDAO().insertItem(r2);
-                    db.recycledItemsDAO().insertItem(r2);
+                   // db.recycledItemsDAO().insertItem(r2);
+                    db.recycledItemsDAO().insertItem(r3);
                     db.recycledItemsDAO().insertItem(r4);
                     db.recycledItemsDAO().insertItem(r5);
                     db.recycledItemsDAO().insertItem(r6);
                     db.recycledItemsDAO().insertItem(r7);
                     db.recycledItemsDAO().insertItem(r8);
-
+*/
 
 
                 } catch (Exception e) {
